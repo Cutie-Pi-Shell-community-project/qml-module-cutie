@@ -1,0 +1,33 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="com.github.CutiePiShellCommunityProject.SettingsDaemon.Backlight">
+    <method name="GetMaxBrightness">
+      <arg name="brightness" type="u" direction="out"/>
+    </method>
+    <method name="GetBrightness">
+      <arg name="brightness" type="u" direction="out"/>
+    </method>
+    <method name="SetBrightness">
+      <arg name="brightness" type="u" direction="in"/>
+    </method>
+  </interface>
+  <interface name="com.github.CutiePiShellCommunityProject.SettingsDaemon.Atmosphere">
+    <method name="GetPath">
+      <arg name="path" type="s" direction="out"/>
+    </method>
+    <method name="GetVariant">
+      <arg name="variant" type="s" direction="out"/>
+    </method>
+    <method name="SetPath">
+      <arg name="path" type="s" direction="in"/>
+    </method>
+    <method name="SetVariant">
+      <arg name="variant" type="s" direction="in"/>
+    </method>
+    <signal name="PathChanged">
+    </signal>
+    <signal name="VariantChanged">
+    </signal>
+  </interface>
+</node>
