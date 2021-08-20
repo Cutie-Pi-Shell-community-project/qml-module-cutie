@@ -2,8 +2,8 @@
 
 AtmosphereModel::AtmosphereModel(QObject *parent) : QObject(parent)
 {
-    this->atmosphere = new com::github::CutiePiShellCommunityProject::SettingsDaemon::Atmosphere(
-        "com.github.CutiePiShellCommunityProject.SettingsDaemon", "/com/github/CutiePiShellCommunityProject/atmosphere",
+    this->atmosphere = new org::cutie_shell::SettingsDaemon::Atmosphere(
+        "org.cutie_shell.SettingsDaemon", "/atmosphere",
         QDBusConnection::systemBus());
     connect(this->atmosphere, SIGNAL(PathChanged()), this, SLOT(onAtmospherePathChanged()));
     connect(this->atmosphere, SIGNAL(VariantChanged()), this, SLOT(onAtmosphereVariantChanged()));

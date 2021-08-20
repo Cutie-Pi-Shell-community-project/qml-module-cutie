@@ -2,14 +2,14 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
-#include "cutiepishellcommunityproject_interface.h"
+#include "cutie_shell_interface.h"
 
 class AtmosphereModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString path READ path NOTIFY pathChanged);
     Q_PROPERTY(QString variant READ variant NOTIFY variantChanged);
-    com::github::CutiePiShellCommunityProject::SettingsDaemon::Atmosphere *atmosphere;
+    org::cutie_shell::SettingsDaemon::Atmosphere *atmosphere;
     QString p_path;
     QString p_variant;
 public:
