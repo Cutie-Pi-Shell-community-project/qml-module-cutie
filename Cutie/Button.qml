@@ -8,7 +8,7 @@ Rectangle {
     width: buttonText.width + 50
     height: buttonText.height + 20
     radius: 0.5 * root.height
-    color: (atmospheresHandler.variant == "dark") ? "#80ffffff" : "#80000000"
+    color: (atmospheresHandler.variant == "dark") ? "#CCffffff" : "#80000000"
     Text {
         id: buttonText
         text: root.buttonText
