@@ -11,5 +11,6 @@ HEADERS += plugin.h
 
 lib.files = Cutie
 lib.path = $$[QT_INSTALL_QML]
-INSTALLS += lib
+target.path = $$[QT_INSTALL_QML]/Cutie
+INSTALLS += lib target
 DBUS_INTERFACES += org.cutie_shell.xml
