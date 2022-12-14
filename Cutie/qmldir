@@ -5,3 +5,6 @@ CutieToast 1.0 Toast.qml
 CutieToastHandler 1.0 ToastHandler.qml
 CutieWindow 1.0 Window.qml
 CutieButton 1.0 Button.qml
+CutiePage 1.0 Page.qml
+CutiePageHeader 1.0 PageHeader.qml
+CutiePageStack 1.0 PageStack.qml
