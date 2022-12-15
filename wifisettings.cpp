@@ -83,7 +83,11 @@ void WifiSettings::updateConnections(QList<QDBusObjectPath> netservices) {
             this, SLOT(onConnectionPropertiesChanged(QString,QMap<QString,QVariant>,QStringList)));
     }
     m_connections = newConnections;
-    emit connectionsChanged(m_connections.values());
+    QList<QMap<QString,QVariant>> maps = m_connections.values();
+    std::sort(maps.begin(), maps.end(), 
+      [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
+        return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
+    emit connectionsChanged(maps);
 }
 
 QMap<QString,QVariant> WifiSettings::activeConnection() {
@@ -91,7 +95,11 @@ QMap<QString,QVariant> WifiSettings::activeConnection() {
 }
 
 QList<QMap<QString,QVariant>> WifiSettings::connections() {
-    return m_connections.values();
+    QList<QMap<QString,QVariant>> maps = m_connections.values();
+    std::sort(maps.begin(), maps.end(), 
+      [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
+        return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
+    return maps;
 }
 
 void WifiSettings::onConnectionPropertiesChanged(QString iface, QMap<QString,QVariant> updated, QStringList invalidated) {
@@ -101,7 +109,11 @@ void WifiSettings::onConnectionPropertiesChanged(QString iface, QMap<QString,QVa
         foreach (QString k, updated.keys())
             props.insert(k, updated.value(k));
         m_connections.insert(((QDBusInterface *)QObject::sender())->path(), props);
-        emit connectionsChanged(m_connections.values());
+        QList<QMap<QString,QVariant>> maps = m_connections.values();
+        std::sort(maps.begin(), maps.end(), 
+        [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
+            return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
+        emit connectionsChanged(maps);
         if (((QDBusInterface *)QObject::sender())->path().compare(m_activePath.path()) == 0)
             emit activeConnectionChanged(props);
     }
