@@ -5,9 +5,13 @@ QT += qml quick dbus
 DESTDIR = Cutie
 TARGET  = qmlcutieplugin
 
-SOURCES += plugin.cpp
+SOURCES += plugin.cpp \
+	atmospheremodel.cpp \
+	wifisettings.cpp
 
-HEADERS += plugin.h
+HEADERS += plugin.h \
+	atmospheremodel.h \
+	wifisettings.h
 
 lib.files = Cutie
 lib.path = $$[QT_INSTALL_QML]

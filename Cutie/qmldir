@@ -8,3 +8,5 @@ CutieButton 1.0 Button.qml
 CutiePage 1.0 Page.qml
 CutiePageHeader 1.0 PageHeader.qml
 CutiePageStack 1.0 PageStack.qml
+CutieListItem 1.0 ListItem.qml
+CutieTile 1.0 Tile.qml

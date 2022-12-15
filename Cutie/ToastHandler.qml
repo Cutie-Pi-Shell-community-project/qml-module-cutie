@@ -1,4 +1,5 @@
 import QtQuick 2.14
+import Cutie 1.0
 
 ListView {
     function show(text, duration) {
@@ -21,7 +22,7 @@ ListView {
         }
     }
 
-    delegate: Toast {
+    delegate: CutieToast {
         Component.onCompleted: {
             if (typeof duration === "undefined") {
                 show(text);

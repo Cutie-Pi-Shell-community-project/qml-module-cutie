@@ -1,4 +1,5 @@
 import QtQuick 2.14
+import Cutie 1.0
 
 Rectangle {
     signal clicked()
@@ -8,7 +9,7 @@ Rectangle {
     width: buttonText.width + 50
     height: buttonText.height + 20
     radius: 0.5 * root.height
-    color: (atmospheresHandler.variant == "dark") ? "#CCffffff" : "#80000000"
+    color: (Atmosphere.variant == "dark") ? "#CCffffff" : "#80000000"
     Text {
         id: buttonText
         text: root.buttonText
@@ -16,7 +17,7 @@ Rectangle {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
         }
-        color: (atmospheresHandler.variant == "dark") ? "#000000" : "#ffffff"
+        color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
     }
     MouseArea {
         anchors.fill: parent

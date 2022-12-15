@@ -13,18 +13,14 @@ Window {
         _pageStack.push(initialPage)
     }
 
-    property Atmosphere atmospheresHandler: atmospheresHandler
-    Atmosphere {
-        id: atmospheresHandler
-    }
-
     property CutieToastHandler toastHandler: toastHandler
+
     CutieToastHandler {
         id: toastHandler
     }
 
     CutiePageStack {
         id: _pageStack
-	anchors.fill: parent
+	    anchors.fill: parent
     }
 }
