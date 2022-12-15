@@ -96,7 +96,12 @@ void WifiSettings::updateConnections(QList<QDBusObjectPath> netservices) {
         );
     }
     m_connections = newConnections;
-    QList<QMap<QString,QVariant>> maps = m_connections.values();
+    QList<QMap<QString,QVariant>> maps;
+    foreach (QString k, m_connections.keys()) {
+        QMap<QString,QVariant> props = m_connections.value(k);
+        props.insert("Path", k);
+        maps.append(props);
+    }
     std::sort(maps.begin(), maps.end(), 
       [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
         return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
@@ -104,11 +109,18 @@ void WifiSettings::updateConnections(QList<QDBusObjectPath> netservices) {
 }
 
 QMap<QString,QVariant> WifiSettings::activeConnection() {
-    return m_connections.value(m_activePath.path());
+    QMap<QString,QVariant> props = m_connections.value(m_activePath.path());
+    props.insert("Path", m_activePath.path());
+    return props;
 }
 
 QList<QMap<QString,QVariant>> WifiSettings::connections() {
-    QList<QMap<QString,QVariant>> maps = m_connections.values();
+    QList<QMap<QString,QVariant>> maps;
+    foreach (QString k, m_connections.keys()) {
+        QMap<QString,QVariant> props = m_connections.value(k);
+        props.insert("Path", k);
+        maps.append(props);
+    }
     std::sort(maps.begin(), maps.end(), 
       [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
         return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
@@ -119,7 +131,12 @@ void WifiSettings::onConnectionStrengthChanged(uchar strength) {
     QMap<QString,QVariant> props = m_connections.value(((QDBusInterface *)QObject::sender())->path());
     props.insert("Strength", strength);
     m_connections.insert(((QDBusInterface *)QObject::sender())->path(), props);
-    QList<QMap<QString,QVariant>> maps = m_connections.values();
+    QList<QMap<QString,QVariant>> maps;
+    foreach (QString k, m_connections.keys()) {
+        QMap<QString,QVariant> props = m_connections.value(k);
+        props.insert("Path", k);
+        maps.append(props);
+    }
     std::sort(maps.begin(), maps.end(), 
     [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
         return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
