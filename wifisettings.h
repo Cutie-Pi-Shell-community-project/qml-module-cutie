@@ -21,8 +21,9 @@ Q_SIGNALS:
     void activeConnectionChanged(QMap<QString,QVariant> activeConnection);
     void connectionsChanged(QList<QMap<QString,QVariant>>);
 public Q_SLOTS:
-    void onConnectionPropertiesChanged(QString iface, QMap<QString,QVariant> updated, QStringList invalidated);
-    void onDevicePropertiesChanged(QString iface, QMap<QString,QVariant> updated, QStringList invalidated);
+    void onConnectionStrengthChanged(uchar strength);
+    void onServicesChanged(QList<QDBusObjectPath> services);
+    void onActiveServiceChanged(QDBusObjectPath activeService);
 private:
     QDBusInterface *wifiDevice;
     QDBusObjectPath m_activePath;

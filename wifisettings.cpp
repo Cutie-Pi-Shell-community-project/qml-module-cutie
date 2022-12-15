@@ -35,15 +35,22 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
     wifiDevice = new QDBusInterface(
 	    "org.cutie_shell.SettingsDaemon",
         netdevices.at(0).path(), 
+	    "org.cutie_shell.SettingsDaemon.NetworkDevice",
+        QDBusConnection::systemBus()
+    );
+    
+    connect(wifiDevice, SIGNAL(ServicesChanged(QList<QDBusObjectPath>)), 
+        this, SLOT(onServicesChanged(QList<QDBusObjectPath>))
+    );
+
+    QDBusInterface wifiDeviceProps(
+	    "org.cutie_shell.SettingsDaemon",
+        netdevices.at(0).path(), 
 	    "org.freedesktop.DBus.Properties",
         QDBusConnection::systemBus()
     );
 
-    QObject::connect(
-        wifiDevice, SIGNAL(PropertiesChanged(QString,QMap<QString,QVariant>,QStringList)),
-        this, SLOT(onDevicePropertiesChanged(QString,QMap<QString,QVariant>,QStringList)));
-
-	QDBusReply<QMap<QString, QVariant>> propReply = wifiDevice->call(
+	QDBusReply<QMap<QString, QVariant>> propReply = wifiDeviceProps.call(
         QLatin1String("GetAll"), 
         QString("org.cutie_shell.SettingsDaemon.NetworkDevice")
     );
@@ -68,19 +75,25 @@ void WifiSettings::updateConnections(QList<QDBusObjectPath> netservices) {
         QDBusInterface *dbusIface = new QDBusInterface(
             "org.cutie_shell.SettingsDaemon",
             netservices.at(i).path(), 
+            "org.cutie_shell.SettingsDaemon.NetworkService",
+            QDBusConnection::systemBus()
+        );
+        QDBusInterface dbusPropIface(
+            "org.cutie_shell.SettingsDaemon",
+            netservices.at(i).path(), 
             "org.freedesktop.DBus.Properties",
             QDBusConnection::systemBus()
         );
-        QDBusReply<QMap<QString, QVariant>> reply = dbusIface->call(
+        QDBusReply<QMap<QString, QVariant>> reply = dbusPropIface.call(
             QLatin1String("GetAll"), 
             QString("org.cutie_shell.SettingsDaemon.NetworkService")
         );
         if (!reply.isValid()) continue;
         newConnections.insert(netservices.at(i).path(), reply.value());
         m_connectionIfaces.append(dbusIface);
-        QObject::connect(
-            dbusIface, SIGNAL(PropertiesChanged(QString,QMap<QString,QVariant>,QStringList)),
-            this, SLOT(onConnectionPropertiesChanged(QString,QMap<QString,QVariant>,QStringList)));
+        connect(dbusIface, SIGNAL(StrengthChanged(uchar)), 
+            this, SLOT(onConnectionStrengthChanged(uchar))
+        );
     }
     m_connections = newConnections;
     QList<QMap<QString,QVariant>> maps = m_connections.values();
@@ -102,34 +115,26 @@ QList<QMap<QString,QVariant>> WifiSettings::connections() {
     return maps;
 }
 
-void WifiSettings::onConnectionPropertiesChanged(QString iface, QMap<QString,QVariant> updated, QStringList invalidated) {
-    Q_UNUSED(invalidated);
-    if (iface == "org.cutie_shell.SettingsDaemon.NetworkService") {
-        QMap<QString,QVariant> props = m_connections.value(((QDBusInterface *)QObject::sender())->path());
-        foreach (QString k, updated.keys())
-            props.insert(k, updated.value(k));
-        m_connections.insert(((QDBusInterface *)QObject::sender())->path(), props);
-        QList<QMap<QString,QVariant>> maps = m_connections.values();
-        std::sort(maps.begin(), maps.end(), 
-        [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
-            return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
-        emit connectionsChanged(maps);
-        if (((QDBusInterface *)QObject::sender())->path().compare(m_activePath.path()) == 0)
-            emit activeConnectionChanged(props);
-    }
+void WifiSettings::onConnectionStrengthChanged(uchar strength) {
+    QMap<QString,QVariant> props = m_connections.value(((QDBusInterface *)QObject::sender())->path());
+    props.insert("Strength", strength);
+    m_connections.insert(((QDBusInterface *)QObject::sender())->path(), props);
+    QList<QMap<QString,QVariant>> maps = m_connections.values();
+    std::sort(maps.begin(), maps.end(), 
+    [](const QMap<QString,QVariant>& a, const QMap<QString,QVariant>& b) -> bool { 
+        return a.value("Strength").value<uchar>() > b.value("Strength").value<uchar>(); });
+    emit connectionsChanged(maps);
+    if (((QDBusInterface *)QObject::sender())->path().compare(m_activePath.path()) == 0)
+        emit activeConnectionChanged(props);
 }
 
-void WifiSettings::onDevicePropertiesChanged(QString iface, QMap<QString,QVariant> updated, QStringList invalidated) {
-    Q_UNUSED(invalidated);
-    if (iface == "org.cutie_shell.SettingsDaemon.NetworkDevice") {
-        if (updated.contains("Services")) {
-            updateConnections(qdbus_cast<QList<QDBusObjectPath>>(updated.value("Services")));
-        }
-        if (updated.contains("ActiveService")) {
-            m_activePath = qdbus_cast<QDBusObjectPath>(updated.value("ActiveService"));
-            emit activeConnectionChanged(activeConnection());
-        }
-    }
+void WifiSettings::onServicesChanged(QList<QDBusObjectPath> services) {
+    updateConnections(services);
+}
+
+void WifiSettings::onActiveServiceChanged(QDBusObjectPath activeService) {
+    m_activePath = activeService;
+    emit activeConnectionChanged(activeConnection());
 }
 
 QObject *WifiSettings::provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
