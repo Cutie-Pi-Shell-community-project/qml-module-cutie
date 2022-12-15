@@ -12,7 +12,7 @@ SwipeView {
         repeat: false
         onTriggered: {
             while (currentIndex < count - 1) {
-                takeItem(count - 1);
+                takeItem(count - 1).destroy();
             }
         }
     }
