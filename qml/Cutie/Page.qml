@@ -27,7 +27,7 @@ Page {
         }
         anchors.horizontalCenter: parent.left
         anchors.top: parent.top
-        anchors.topMargin: 40
+        anchors.topMargin: 33
         Behavior on opacity {
             NumberAnimation { properties: "opacity"; easing.type: Easing.InOutQuad; duration: 500 }
         }
