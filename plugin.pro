@@ -7,12 +7,14 @@ TARGET  = qmlcutieplugin
 SOURCES += src/plugin.cpp \
 	src/atmosphere/atmospheremodel.cpp \
 	src/wifi/wifisettings.cpp \
-	src/wifi/wifiaccesspoint.cpp
+	src/wifi/wifiaccesspoint.cpp \
+	src/wifi/cutienetworkconnection.cpp
 
 HEADERS += src/plugin.h \
 	src/atmosphere/atmospheremodel.h \
 	src/wifi/wifisettings.h \
-	src/wifi/wifiaccesspoint.h
+	src/wifi/wifiaccesspoint.h \
+	src/wifi/cutienetworkconnection.h
 
 INCLUDEPATH += src
 
