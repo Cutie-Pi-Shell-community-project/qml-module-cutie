@@ -22,6 +22,7 @@ public:
 
     Q_INVOKABLE void requestScan();
     Q_INVOKABLE void activateConnection(CutieNetworkConnection *connection, WifiAccessPoint *ap);
+    Q_INVOKABLE void addAndActivateConnection(WifiAccessPoint *ap, QString psk);
 
     static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine);
 Q_SIGNALS:

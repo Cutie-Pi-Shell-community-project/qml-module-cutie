@@ -1,6 +1,7 @@
 #include "plugin.h"
 
 WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
+    qDBusRegisterMetaType<QMap<QString,QMap<QString,QVariant>>>();
     QDBusInterface networkManager(
 	    "org.freedesktop.NetworkManager",
         "/org/freedesktop/NetworkManager", 
@@ -192,4 +193,28 @@ void WifiSettings::activateConnection(CutieNetworkConnection *connection, WifiAc
         QDBusObjectPath(connection->path()), 
         QDBusObjectPath(m_wlanPath.path()), 
         QDBusObjectPath(ap ? ap->path() : "/"));
+}
+
+void WifiSettings::addAndActivateConnection(WifiAccessPoint *ap, QString psk) {
+    QMap<QString,QMap<QString,QVariant>> data;
+
+    QMap<QString,QVariant> wireless;
+    wireless.insert("id", qdbus_cast<QString>(ap->data().value("Ssid")));
+    data.insert("connection", wireless);
+
+    if (psk != "") {
+        QMap<QString,QVariant> security;
+        security.insert("psk", psk);
+        data.insert("802-11-wireless-security", security);
+    }
+
+    QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+        "org.freedesktop.NetworkManager",
+        QDBusConnection::systemBus()
+    ).call("AddAndActivateConnection", 
+        QVariant::fromValue<QMap<QString,QMap<QString,QVariant>>>(data), 
+        QDBusObjectPath(m_wlanPath.path()), 
+        QDBusObjectPath(ap->path()));
 }
