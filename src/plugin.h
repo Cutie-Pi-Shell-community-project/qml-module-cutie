@@ -3,8 +3,8 @@
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
 #include "cutie_shell_interface.h"
-#include "atmospheremodel.h"
-#include "wifisettings.h"
+#include "atmosphere/atmospheremodel.h"
+#include "wifi/wifisettings.h"
 
 class CutiePlugin : public QQmlExtensionPlugin
 {

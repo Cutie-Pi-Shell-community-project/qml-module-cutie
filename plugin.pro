@@ -2,18 +2,21 @@ TEMPLATE = lib
 CONFIG += qt plugin
 QT += qml quick dbus
 
-DESTDIR = Cutie
 TARGET  = qmlcutieplugin
 
-SOURCES += plugin.cpp \
-	atmospheremodel.cpp \
-	wifisettings.cpp
+SOURCES += src/plugin.cpp \
+	src/atmosphere/atmospheremodel.cpp \
+	src/wifi/wifisettings.cpp \
+	src/wifi/wifiaccesspoint.cpp
 
-HEADERS += plugin.h \
-	atmospheremodel.h \
-	wifisettings.h
+HEADERS += src/plugin.h \
+	src/atmosphere/atmospheremodel.h \
+	src/wifi/wifisettings.h \
+	src/wifi/wifiaccesspoint.h
 
-lib.files = Cutie
+INCLUDEPATH += src
+
+lib.files = qml/Cutie
 lib.path = $$[QT_INSTALL_QML]
 target.path = $$[QT_INSTALL_QML]/Cutie
 INSTALLS += lib target

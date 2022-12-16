@@ -5,17 +5,22 @@ import Cutie 1.0
 
 Item {
 	id: root
-	height: 30
+	height: 35 + (subText != "" ? 15 : 0)
 	width: parent.width
 	property var text: ""
+	property var subText: ""
 	property var icon: ""
 	signal clicked()
 	CutieTile {
 		x: 15
 		y: 2
-		width: mouse.pressed ? parent.width - 2 * x : 0.0
+		width: mouse.pressed ? parent.width - 2 * x : 0
 		height: parent.height - 2 * y
 		opacity: mouse.pressed ? 1.0 : 0.0
+
+		Behavior on width {
+			NumberAnimation { duration: 200 }
+		}
 	}
 
 	Image {
@@ -42,7 +47,17 @@ Item {
 		x: 20 + (root.icon ? iconImage.width + iconImage.x : 0)
 		y: 10
 		text: root.text
-		font.pixelSize: 14
+		font.pixelSize: 15
+		font.family: "Lato"
+		color: (Atmosphere.variant == "dark") ? "white" : "black"
+	}
+
+
+	Text {
+		x: 20 + (root.icon ? iconImage.width + iconImage.x : 0)
+		y: 30
+		text: root.subText
+		font.pixelSize: 10
 		font.family: "Lato"
 		color: (Atmosphere.variant == "dark") ? "white" : "black"
 	}
