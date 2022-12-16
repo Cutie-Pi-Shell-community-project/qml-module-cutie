@@ -73,8 +73,10 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
             if (path.path() == "/") continue;
             CutieNetworkConnection* nconn = new CutieNetworkConnection(this);
             nconn->setPath(path.path());
-            m_savedConnections.insert(path, nconn);
-            emit savedConnectionsChanged(savedConnections());
+            if (qdbus_cast<QString>(qdbus_cast<QMap<QString,QVariant>>(nconn->data().value("connection")).value("type")) == "802-11-wireless") {
+                m_savedConnections.insert(path, nconn);
+                emit savedConnectionsChanged(savedConnections());
+            }
         }
     }
 
@@ -129,13 +131,7 @@ WifiAccessPoint *WifiSettings::activeAccessPoint() {
 }
 
 QList<CutieNetworkConnection *> WifiSettings::savedConnections() {
-    QList<CutieNetworkConnection *> conns;
-    foreach (CutieNetworkConnection *v, m_savedConnections.values()) {
-        if (qdbus_cast<QString>(qdbus_cast<QMap<QString,QVariant>>(v->data().value("connection")).value("type")) == "802-11-wireless") {
-            conns.append(v);
-        }
-    }
-    return conns;
+    return m_savedConnections.values();
 }
 
 void WifiSettings::onNewConnection(QDBusObjectPath path) {
@@ -184,4 +180,16 @@ void WifiSettings::requestScan() {
         "org.freedesktop.NetworkManager.Device.Wireless",
         QDBusConnection::systemBus()
     ).call("RequestScan", QMap<QString,QVariant>());
+}
+
+void WifiSettings::activateConnection(CutieNetworkConnection *connection, WifiAccessPoint *ap) {
+    QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+        "org.freedesktop.NetworkManager",
+        QDBusConnection::systemBus()
+    ).call("ActivateConnection", 
+        QDBusObjectPath(connection->path()), 
+        QDBusObjectPath(m_wlanPath.path()), 
+        QDBusObjectPath(ap ? ap->path() : "/"));
 }

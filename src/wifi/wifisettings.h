@@ -21,6 +21,7 @@ public:
     QList<CutieNetworkConnection *> savedConnections();
 
     Q_INVOKABLE void requestScan();
+    Q_INVOKABLE void activateConnection(CutieNetworkConnection *connection, WifiAccessPoint *ap);
 
     static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine);
 Q_SIGNALS:
