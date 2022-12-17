@@ -10,15 +10,19 @@ Item {
 	property var text: ""
 	property var subText: ""
 	property var icon: ""
+	property var highlighted: false
 	signal clicked()
 	CutieTile {
 		x: 15
 		y: 2
-		width: mouse.pressed ? parent.width - 2 * x : 0
+		width: highlighted || mouse.pressed ? parent.width - 2 * x : 0
 		height: parent.height - 2 * y
-		opacity: mouse.pressed ? 1.0 : 0.0
+		opacity: highlighted || mouse.pressed ? 1.0 : 0.0
 
 		Behavior on width {
+			NumberAnimation { duration: 200 }
+		}
+		Behavior on opacity {
 			NumberAnimation { duration: 200 }
 		}
 	}
@@ -26,11 +30,10 @@ Item {
 	Image {
 		id: iconImage
 		x: 20
-		y: 2
+		y: 8 + (subText != "" ? 8 : 0)
 		width: 20
 		height: width
 		source: root.icon
-		anchors.verticalCenter: parent.verticalCenter
 		fillMode: Image.PreserveAspectFit
 		sourceSize.width: width
 		sourceSize.height: height
