@@ -10,3 +10,4 @@ CutiePageHeader 1.0 PageHeader.qml
 CutiePageStack 1.0 PageStack.qml
 CutieListItem 1.0 ListItem.qml
 CutieTile 1.0 Tile.qml
+CutieToggle 1.0 Toggle.qml
