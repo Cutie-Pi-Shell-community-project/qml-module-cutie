@@ -49,3 +49,12 @@ void CutieNetworkConnection::onUpdated() {
     dbusArg >> m_data;
     emit dataChanged(data());
 }
+
+void CutieNetworkConnection::deleteConnection() {
+    QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        m_path, 
+        "org.freedesktop.NetworkManager.Settings.Connection",
+        QDBusConnection::systemBus()
+    ).call("Delete");
+}

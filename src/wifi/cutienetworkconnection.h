@@ -16,6 +16,8 @@ public:
     QString path();
     void setPath(QString path);
     QMap<QString,QVariant> data();
+
+    Q_INVOKABLE void deleteConnection();
 Q_SIGNALS:
     void pathChanged(QString path);
     void dataChanged(QMap<QString,QVariant> data);
