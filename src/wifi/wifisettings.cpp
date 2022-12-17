@@ -9,6 +9,18 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
         QDBusConnection::systemBus()
     );
 
+    QDBusReply<QDBusVariant> enabledReply = QDBusInterface(
+	    "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+	    "org.freedesktop.DBus.Properties",
+        QDBusConnection::systemBus()
+    ).call(
+        "Get", "org.freedesktop.NetworkManager", "WirelessEnabled"
+    );
+    m_wirelessEnabled = enabledReply.isValid() 
+        ? qdbus_cast<bool>(enabledReply.value().variant())
+        : false;
+
     QDBusReply<QList<QDBusObjectPath>> devicesReply = networkManager.call("GetDevices");
     if (!devicesReply.isValid()) return;
     QList<QDBusObjectPath> devices = devicesReply.value();
@@ -83,6 +95,13 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
 
     QDBusConnection::systemBus().connect(
         "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+        "org.freedesktop.DBus.Properties", 
+        "PropertiesChanged",
+        this, SLOT(onPropertiesChanged(QString,QMap<QString, QVariant>,QStringList)));
+
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.NetworkManager",
         "/org/freedesktop/NetworkManager/Settings", 
         "org.freedesktop.NetworkManager.Settings", 
         "NewConnection",
@@ -114,7 +133,7 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
         m_wlanPath.path(), 
         "org.freedesktop.DBus.Properties", 
         "PropertiesChanged",
-        this, SLOT(onPropertiesChanged(QString,QMap<QString, QVariant>,QStringList)));
+        this, SLOT(onDevicePropertiesChanged(QString,QMap<QString, QVariant>,QStringList)));
 }
 
 WifiSettings::~WifiSettings() {}
@@ -165,6 +184,16 @@ QObject *WifiSettings::provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 }
 
 void WifiSettings::onPropertiesChanged(QString iface, QMap<QString, QVariant> updated, QStringList invalidated) {
+    Q_UNUSED(invalidated);
+    if (iface == "org.freedesktop.NetworkManager") {
+        if (updated.contains("WirelessEnabled")) {
+            m_wirelessEnabled = qdbus_cast<bool>(updated.value("WirelessEnabled"));
+            emit wirelessEnabledChanged(m_wirelessEnabled);
+        }
+    };
+}
+
+void WifiSettings::onDevicePropertiesChanged(QString iface, QMap<QString, QVariant> updated, QStringList invalidated) {
     Q_UNUSED(invalidated);
     if (iface == "org.freedesktop.NetworkManager.Device.Wireless") {
         if (updated.contains("ActiveAccessPoint")) {
@@ -217,4 +246,24 @@ void WifiSettings::addAndActivateConnection(WifiAccessPoint *ap, QString psk) {
         QVariant::fromValue<QMap<QString,QMap<QString,QVariant>>>(data), 
         QDBusObjectPath(m_wlanPath.path()), 
         QDBusObjectPath(ap->path()));
+}
+
+bool WifiSettings::wirelessEnabled() {
+    return m_wirelessEnabled;
+}
+
+void WifiSettings::setWirelessEnabled(bool wirelessEnabled) {
+    m_wirelessEnabled = wirelessEnabled;
+    QDBusMessage message = QDBusMessage::createMethodCall(
+        "org.freedesktop.NetworkManager", 
+        "/org/freedesktop/NetworkManager", 
+	    "org.freedesktop.DBus.Properties",
+        "Set");
+    QList<QVariant> arguments;
+    arguments << "org.freedesktop.NetworkManager" 
+        << "WirelessEnabled" 
+        << QVariant::fromValue(
+        QDBusVariant(m_wirelessEnabled));
+    message.setArguments(arguments);
+    QDBusConnection::systemBus().call(message);
 }
