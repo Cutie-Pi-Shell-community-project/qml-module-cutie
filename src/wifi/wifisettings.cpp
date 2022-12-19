@@ -9,6 +9,15 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
         QDBusConnection::systemBus()
     );
 
+    QDBusInterface(
+	    "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager/AgentManager", 
+	    "org.freedesktop.NetworkManager.AgentManager",
+        QDBusConnection::systemBus()
+    ).call(
+        "Register", "org.cutie_shell"
+    );
+
     QDBusReply<QDBusVariant> enabledReply = QDBusInterface(
 	    "org.freedesktop.NetworkManager",
         "/org/freedesktop/NetworkManager", 
