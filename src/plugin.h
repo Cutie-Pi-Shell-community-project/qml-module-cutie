@@ -5,6 +5,8 @@
 #include "cutie_shell_interface.h"
 #include "atmosphere/atmospheremodel.h"
 #include "wifi/wifisettings.h"
+#include "modem/modemsettings.h"
+#include "modem/ofonomodem.h"
 
 class CutiePlugin : public QQmlExtensionPlugin
 {

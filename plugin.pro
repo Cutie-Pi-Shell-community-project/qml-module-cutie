@@ -8,13 +8,19 @@ SOURCES += src/plugin.cpp \
 	src/atmosphere/atmospheremodel.cpp \
 	src/wifi/wifisettings.cpp \
 	src/wifi/wifiaccesspoint.cpp \
-	src/wifi/cutienetworkconnection.cpp
+	src/wifi/cutienetworkconnection.cpp \
+	src/modem/modemsettings.cpp \
+	src/modem/cutiemodem.cpp \
+	src/modem/ofonomodem.cpp
 
 HEADERS += src/plugin.h \
 	src/atmosphere/atmospheremodel.h \
 	src/wifi/wifisettings.h \
 	src/wifi/wifiaccesspoint.h \
-	src/wifi/cutienetworkconnection.h
+	src/wifi/cutienetworkconnection.h \
+	src/modem/modemsettings.h \
+	src/modem/cutiemodem.h \
+	src/modem/ofonomodem.h
 
 INCLUDEPATH += src
 
