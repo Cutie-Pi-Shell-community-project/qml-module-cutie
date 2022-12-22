@@ -1,6 +1,7 @@
 TEMPLATE = lib
-CONFIG += qt plugin
+CONFIG += qt plugin link_pkgconfig
 QT += qml quick dbus
+PKGCONFIG += libpulse
 
 TARGET  = qmlcutieplugin
 
@@ -12,7 +13,8 @@ SOURCES += src/plugin.cpp \
 	src/modem/modemsettings.cpp \
 	src/modem/cutiemodem.cpp \
 	src/modem/ofonomodem.cpp \
-	src/notifications/notifications.cpp
+	src/notifications/notifications.cpp \
+	src/volume/cutievolume.cpp
 
 HEADERS += src/plugin.h \
 	src/atmosphere/atmospheremodel.h \
@@ -22,7 +24,8 @@ HEADERS += src/plugin.h \
 	src/modem/modemsettings.h \
 	src/modem/cutiemodem.h \
 	src/modem/ofonomodem.h \
-	src/notifications/notifications.h
+	src/notifications/notifications.h \
+	src/volume/cutievolume.h
 
 INCLUDEPATH += src
 
