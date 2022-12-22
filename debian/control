@@ -14,5 +14,5 @@ Package: qml-module-cutie
 Architecture: any
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}, cutie-settings-daemon, qml-module-qtquick2, qml-module-qtquick-controls, qml-module-qtquick-controls2, qml-module-qtsensors, qml-module-qtgraphicaleffects
+Depends: ${misc:Depends}, ${shlibs:Depends}, cutie-settings-daemon, qml-module-qtquick2, qml-module-qtquick-controls, qml-module-qtquick-controls2, qml-module-qtsensors, qml-module-qtgraphicaleffects, fonts-lato
 Description: This package contains a QML module for Cutie specific functionality.
