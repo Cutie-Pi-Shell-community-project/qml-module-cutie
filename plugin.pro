@@ -11,7 +11,8 @@ SOURCES += src/plugin.cpp \
 	src/wifi/cutienetworkconnection.cpp \
 	src/modem/modemsettings.cpp \
 	src/modem/cutiemodem.cpp \
-	src/modem/ofonomodem.cpp
+	src/modem/ofonomodem.cpp \
+	src/notifications/notifications.cpp
 
 HEADERS += src/plugin.h \
 	src/atmosphere/atmospheremodel.h \
@@ -20,7 +21,8 @@ HEADERS += src/plugin.h \
 	src/wifi/cutienetworkconnection.h \
 	src/modem/modemsettings.h \
 	src/modem/cutiemodem.h \
-	src/modem/ofonomodem.h
+	src/modem/ofonomodem.h \
+	src/notifications/notifications.h
 
 INCLUDEPATH += src
 

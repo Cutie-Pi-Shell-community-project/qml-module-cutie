@@ -7,6 +7,7 @@
 #include "wifi/wifisettings.h"
 #include "modem/modemsettings.h"
 #include "modem/ofonomodem.h"
+#include "notifications/notifications.h"
 
 class CutiePlugin : public QQmlExtensionPlugin
 {
