@@ -97,7 +97,7 @@ bool CutieVolume::muted() {
 
 void CutieVolume::setVolume(float volume) {
     m_volume = volume;
-    pa_cvolume_set(&_cvolume, 16,PA_VOLUME_NORM * m_volume);
+    pa_cvolume_set(&_cvolume, 2, PA_VOLUME_NORM * m_volume);
     pa_context_set_sink_volume_by_name(_context, _default_sink_name.toUtf8().constData(), &_cvolume, nullptr, this);
     emit volumeChanged(m_volume);
 }
