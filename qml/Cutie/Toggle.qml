@@ -4,7 +4,7 @@ import Cutie 1.0
 Item {
     id: root
 
-    signal toogled(value: bool)
+    signal toggled(value: bool)
     property bool value: false
 
     height: 20
@@ -28,7 +28,7 @@ Item {
         anchors.fill: parent
         onClicked: {
             root.value = !root.value
-            root.toogled(root.value);
+            root.toggled(root.value);
         }
     }
 }
