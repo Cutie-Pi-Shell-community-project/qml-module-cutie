@@ -4,17 +4,11 @@ import QtQuick.Layouts 1.15
 import QtGraphicalEffects 1.15
 import Cutie 1.0
 
-Button {
+MenuItem {
 	id: root
 	width: parent.width
-	property string subText: ""
-	property CutieMenu menu
 	padding: 15
 	bottomPadding: 10
-
-	onPressAndHold: {
-		if (menu) menu.open();
-	}
 
 	background: CutieTile {
 		anchors.fill: parent
@@ -22,6 +16,7 @@ Button {
 		anchors.leftMargin: 10
 		anchors.rightMargin: 10
 		opacity: highlighted || pressed ? 1.0 : 0.0
+		color: (Atmosphere.variant == "dark") ? "#5c000000" : "#5cffffff"
 	}
 
 	contentItem: RowLayout {
@@ -32,23 +27,22 @@ Button {
 		anchors.topMargin: 15
 		anchors.bottomMargin: 15
 		Item {
-			width: iconImage.status == Image.Ready ? iconImage.width : 0
+			width: iconImage.status == Image.Ready ? 20 : 0
 			height: width
 			Image {
 				id: iconImage
-				width: 20
-				height: width
+				anchors.fill: parent
 				source: root.icon.source
 				fillMode: Image.PreserveAspectFit
-				sourceSize.width: width
-				sourceSize.height: height
+				sourceSize.width: parent.width
+				sourceSize.height: parent.height
 				visible: false
 			}
 
 			ColorOverlay {
 				anchors.fill: iconImage
 				source: iconImage
-				color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+				color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
 			}
 		}
 
@@ -58,16 +52,7 @@ Button {
 				text: root.text
 				font.pixelSize: 15
 				font.family: "Lato"
-				color: (Atmosphere.variant == "dark") ? "white" : "black"
-        			Layout.fillWidth: true
-			}
-			Text {
-				id: subTextItem
-				text: root.subText
-				visible: root.subText !== ""
-				font.pixelSize: 10
-				font.family: "Lato"
-				color: (Atmosphere.variant == "dark") ? "white" : "black"
+				color: (Atmosphere.variant == "dark") ? "black" : "white"
         			Layout.fillWidth: true
 			}
 		}

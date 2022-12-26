@@ -4,7 +4,7 @@ import QtQuick.Window 2.15
 import Cutie 1.0
 
 Item {
-    height: titleText.height + descriptionText.height * 3/2
+    height: titleText.height * 3/2 + (description != "" ? descriptionText.height * 3/2 : 0)
     property string title: "Page"
     property string description: ""
 

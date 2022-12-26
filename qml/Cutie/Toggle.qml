@@ -1,34 +1,35 @@
-import QtQuick 2.14
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 import Cutie 1.0
 
-Item {
+Switch {
     id: root
+    leftPadding: 10
+    rightPadding: 10
+    topPadding: 5
+    bottomPadding: 5
+    height: 40
+    width: 75
 
-    signal toggled(value: bool)
-    property bool value: false
-
-    height: 20
-    width: 40
-    Rectangle {
-        width: 40
-        height: 5
-        radius: 0.5 * height
-        y: 7.5
-        color: (Atmosphere.variant == "dark") ? "#88ffffff" : "#88000000"
+    background: Rectangle {
+        anchors.centerIn: parent
+        height: 3
+        width: root.availableWidth - root.rightPadding - root.leftPadding
+        radius: height / 2
+        color: (Atmosphere.variant == "dark") ? "#8fffffff" : "#60000000"
     }
-    Rectangle {
+
+    indicator: Rectangle {
+        x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
+        y: root.topPadding + 5
         width: 20
         height: 20
-        radius: 0.5 * height
-        y: 0
-        x: root.value ? 20 : 0
+        radius: width / 2
         color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
-    }
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            root.value = !root.value
-            root.toggled(root.value);
+
+        Behavior on x {
+            NumberAnimation { duration: 100 }
         }
     }
+
 }

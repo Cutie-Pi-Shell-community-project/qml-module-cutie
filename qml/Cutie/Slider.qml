@@ -14,7 +14,7 @@ Slider {
     background: Rectangle {
         x: 25
         y: 19
-        height: 2
+        height: 3
         width: root.availableWidth - root.rightPadding - root.leftPadding
         radius: height / 2
         color: (Atmosphere.variant == "dark") ? "#8fffffff" : "#60000000"
@@ -22,9 +22,9 @@ Slider {
 
     handle: Rectangle {
         x: root.leftPadding + root.visualPosition * (root.availableWidth - width)
-        y: root.topPadding
-        width: 30
-        height: 30
+        y: root.topPadding + 5
+        width: 20
+        height: 20
         radius: width / 2
         color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
     }

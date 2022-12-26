@@ -1,29 +1,37 @@
-import QtQuick 2.14
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtGraphicalEffects 1.15
 import Cutie 1.0
 
-Rectangle {
-    signal clicked()
-    property string buttonText: ""
-
+Button {
     id: root
-    width: buttonText.width + 40
-    height: buttonText.height + 10
-    radius: 0.5 * root.height
-    color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
-    Text {
-        id: buttonText
-        text: root.buttonText
-		font.pixelSize: 15
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            verticalCenter: parent.verticalCenter
-        }
-        color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
-    }
-    MouseArea {
+    property string buttonText
+    property alias color: backgroundRect.color
+    text: buttonText
+    font.pixelSize: 15
+    font.family: "Lato"
+    padding: 10
+    background: Rectangle {
+        id: backgroundRect
         anchors.fill: parent
-        onClicked: {
-            root.clicked();
+        radius: 0.5 * root.height
+        color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+        Rectangle {
+            anchors.fill: parent
+            radius: 0.5 * root.height
+            color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
+            opacity: root.pressed ? .25 : 0
         }
+    }
+    contentItem: Label {
+        text: root.text
+        font: root.font
+        color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        anchors.centerIn: parent
     }
 }
+
+

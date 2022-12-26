@@ -12,3 +12,6 @@ CutieListItem 1.0 ListItem.qml
 CutieTile 1.0 Tile.qml
 CutieToggle 1.0 Toggle.qml
 CutieSlider 1.0 Slider.qml
+CutieMenu 1.0 Menu.qml
+CutieMenuItem 1.0 MenuItem.qml
+CutieTextField 1.0 TextField.qml
