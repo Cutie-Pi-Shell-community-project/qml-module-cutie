@@ -40,8 +40,25 @@ SwipeView {
             }
             addItem(page);
         } else if (page instanceof Component) { 
-            addItem(page.createObject(_stackView, properties));
+            if (page.status == Component.Ready) {
+                addItem(page.createObject(_stackView, properties));
+            } else page.statusChanged.connect(() => {
+                finishBaking(page, properties)
+            });
+        } else if (typeof page === 'string' || page instanceof String) { 
+            let component = Qt.createComponent(page);
+            if (component.status == Component.Ready) {
+                addItem(component.createObject(_stackView, properties));
+            } else component.statusChanged.connect(() => {
+                finishBaking(component, properties)
+            });
         }
+        currentIndex = count - 1;
+    }
+
+    function finishBaking(page, properties) {
+        if (page.status == Component.Ready)
+            addItem(page.createObject(_stackView, properties));
         currentIndex = count - 1;
     }
 
