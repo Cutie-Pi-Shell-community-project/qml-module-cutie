@@ -56,6 +56,11 @@ SwipeView {
         currentIndex = count - 1;
     }
 
+    function replaceTop(page, properties) {
+        takeItem(count - 1).destroy();
+        push(page, properties);
+    }
+
     function finishBaking(page, properties) {
         if (page.status == Component.Ready)
             addItem(page.createObject(_stackView, properties));
