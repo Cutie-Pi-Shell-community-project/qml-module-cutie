@@ -21,7 +21,7 @@ Button {
             anchors.fill: parent
             radius: 5
             color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
-            opacity: root.pressed ? .25 : 0
+            opacity: root.pressed || root.checked ? .25 : 0
         }
     }
     contentItem: Label {
