@@ -14,8 +14,8 @@ Rectangle {
 
     id: toastBody
     width: toastText.width + 20
-    height: toastText.height + 10
-    radius: 15
+    height: toastText.height + 15
+    radius: 5
     opacity: 0
     color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
     anchors {
