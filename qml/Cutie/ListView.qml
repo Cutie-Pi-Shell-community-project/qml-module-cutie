@@ -12,6 +12,7 @@ ListView {
         height: 100
         width: root.width
         visible: !!menu
+        z: 100
         CutieButton {
             width: 50
             height: 50
