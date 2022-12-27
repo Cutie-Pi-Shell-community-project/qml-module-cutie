@@ -20,4 +20,22 @@ Menu {
 		radius: 5
 		color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
 	}
+
+	enter: Transition {
+		NumberAnimation { 
+			property: "opacity"
+			duration: 100
+			from: 0.0
+			to: 1.0 
+		}
+	}
+
+	exit: Transition {
+		NumberAnimation { 
+			property: "opacity"
+			duration: 100
+			from: 1.0
+			to: 0.0 
+		}
+	}
 }
