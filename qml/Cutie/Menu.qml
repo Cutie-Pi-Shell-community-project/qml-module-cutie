@@ -6,11 +6,12 @@ import Cutie 1.0
 
 Menu {
 	id: root
-	x: parent.x + 20
-	y: parent.y + parent.height + 20
+	x: 20
+	y: parent.height + 10
 	width: parent.width - 40
 	modal: true
 	dim: false
+	topPadding: 5
 	bottomPadding: 10
 
 	background: Rectangle {
