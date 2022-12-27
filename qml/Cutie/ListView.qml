@@ -9,7 +9,7 @@ ListView {
 	property CutieMenu menu
     footerPositioning: ListView.OverlayFooter
     footer: Item {
-        height: 100
+        height: !!menu ? 100 : 0
         width: root.width
         visible: !!menu
         z: 100
