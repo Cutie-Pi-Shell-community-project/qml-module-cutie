@@ -15,11 +15,11 @@ Button {
     background: Rectangle {
         id: backgroundRect
         anchors.fill: parent
-        radius: 0.5 * root.height
+        radius: 5
         color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
         Rectangle {
             anchors.fill: parent
-            radius: 0.5 * root.height
+            radius: 5
             color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
             opacity: root.pressed ? .25 : 0
         }
