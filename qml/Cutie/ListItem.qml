@@ -8,9 +8,12 @@ Button {
 	id: root
 	width: parent.width
 	property string subText: ""
+	property bool iconOverlay: true
 	property CutieMenu menu
 	padding: 15
 	bottomPadding: 10
+	icon.width: 20
+	icon.height: 20
 
 	onPressAndHold: {
 		if (menu) menu.open();
@@ -36,19 +39,20 @@ Button {
 			height: width
 			Image {
 				id: iconImage
-				width: 20
-				height: width
+				width: root.icon.width
+				height: root.icon.height
 				source: root.icon.source
 				fillMode: Image.PreserveAspectFit
 				sourceSize.width: width
 				sourceSize.height: height
-				visible: false
+				visible: !root.iconOverlay
 			}
 
 			ColorOverlay {
 				anchors.fill: iconImage
 				source: iconImage
 				color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+				visible: root.iconOverlay
 			}
 		}
 
