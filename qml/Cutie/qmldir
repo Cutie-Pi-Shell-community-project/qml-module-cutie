@@ -16,3 +16,4 @@ CutieMenu 1.0 Menu.qml
 CutieMenuItem 1.0 MenuItem.qml
 CutieTextField 1.0 TextField.qml
 CutieListView 1.0 ListView.qml
+CutieLabel 1.0 Label.qml
