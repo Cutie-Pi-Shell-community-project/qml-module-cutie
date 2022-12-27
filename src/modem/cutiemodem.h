@@ -21,6 +21,7 @@ public:
     QVariantMap simData();
 
     virtual void setPath(QString path) = 0;
+    virtual Q_INVOKABLE void sendMessage(QString to, QString message) = 0;
 Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);

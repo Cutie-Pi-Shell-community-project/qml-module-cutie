@@ -64,3 +64,12 @@ void OfonoModem::onSimPropertyChanged(QString name, QVariant value) {
 void OfonoModem::onIncomingMessage(QString message, QVariantMap props) {
 	emit incomingMessage(message, props);
 }
+
+void OfonoModem::sendMessage(QString to, QString message) {
+	QDBusInterface(
+		"org.ofono",
+		m_path, 
+		"org.ofono.MessageManager",
+		QDBusConnection::systemBus()
+	).call("SendMessage", to, message);
+}

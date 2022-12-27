@@ -18,6 +18,7 @@ public:
     ~OfonoModem();
 
     void setPath(QString path) override;
+    Q_INVOKABLE void sendMessage(QString to, QString message) override;
 Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);
