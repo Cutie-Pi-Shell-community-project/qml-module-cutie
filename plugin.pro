@@ -14,7 +14,8 @@ SOURCES += src/plugin.cpp \
 	src/modem/cutiemodem.cpp \
 	src/modem/ofonomodem.cpp \
 	src/notifications/notifications.cpp \
-	src/volume/cutievolume.cpp
+	src/volume/cutievolume.cpp \
+	src/store/cutiestore.cpp
 
 HEADERS += src/plugin.h \
 	src/atmosphere/atmospheremodel.h \
@@ -25,7 +26,8 @@ HEADERS += src/plugin.h \
 	src/modem/cutiemodem.h \
 	src/modem/ofonomodem.h \
 	src/notifications/notifications.h \
-	src/volume/cutievolume.h
+	src/volume/cutievolume.h \
+	src/store/cutiestore.h
 
 INCLUDEPATH += src
 

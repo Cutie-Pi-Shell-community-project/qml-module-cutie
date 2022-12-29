@@ -9,6 +9,7 @@
 #include "modem/ofonomodem.h"
 #include "notifications/notifications.h"
 #include "volume/cutievolume.h"
+#include "store/cutiestore.h"
 
 class CutiePlugin : public QQmlExtensionPlugin
 {
