@@ -7,6 +7,7 @@ import Cutie 1.0
 Button {
 	id: root
 	width: parent.width
+	height: contentItem.height + 25
 	property string subText: ""
 	property bool iconOverlay: true
 	property CutieMenu menu
@@ -29,12 +30,13 @@ Button {
 
 	contentItem: RowLayout {
 		spacing: 15
-		anchors.fill: parent
+		anchors.left: parent.left
+		anchors.right: parent.right
 		anchors.leftMargin: 30
 		anchors.rightMargin: 30
-		anchors.topMargin: 15
-		anchors.bottomMargin: 15
+		height: Math.max(iconItem.height, textCol.height)
 		Item {
+			id: iconItem
 			width: iconImage.status == Image.Ready ? iconImage.width : 0
 			height: width
 			Image {
@@ -57,13 +59,16 @@ Button {
 		}
 
 		ColumnLayout {
+			id: textCol
         		Layout.fillWidth: true
 			Text {
+				id: mainTextItem
 				text: root.text
 				font.pixelSize: 15
 				font.family: "Lato"
 				color: (Atmosphere.variant == "dark") ? "white" : "black"
         			Layout.fillWidth: true
+				wrapMode: Text.Wrap
 			}
 			Text {
 				id: subTextItem
@@ -73,6 +78,7 @@ Button {
 				font.family: "Lato"
 				color: (Atmosphere.variant == "dark") ? "white" : "black"
         			Layout.fillWidth: true
+				wrapMode: Text.Wrap
 			}
 		}
 	}
