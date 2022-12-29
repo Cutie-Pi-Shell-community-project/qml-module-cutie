@@ -15,9 +15,9 @@ import Cutie 1.0
 ### QML Types
 
 - [Atmosphere](types/atmosphere)
-- [CutieButton](/)
-- [CutieLabel](/)
-- [CutieListItem](/)
+- [CutieButton](types/button)
+- [CutieLabel](types/label)
+- [CutieListItem](types/listitem)
 - [CutieListView](/)
 - [CutieMenu](/)
 - [CutieMenuItem](/)
