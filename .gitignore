@@ -9,3 +9,5 @@ cutie-settings-daemon
 *adaptor.cpp
 *adaptor.h
 *.so
+_site
+*.lock
