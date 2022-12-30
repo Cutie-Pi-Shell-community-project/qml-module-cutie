@@ -1,8 +1,8 @@
 ---
-title: ListItem QML Type
+title: CutieListItem QML Type
 ---
 
-ListItem is a selectable list item styled to fit Cutie UI visual language.
+CutieListItem is a selectable list item styled to fit Cutie UI visual language.
 
 Inherits: QtQuick.Controls 2.15 Button
 
