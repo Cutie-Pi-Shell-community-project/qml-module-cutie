@@ -13,7 +13,7 @@ Inherits: QObject
 
 ## Detailed Description
 
-This singleton type is used to retireve information about the currently used Atmosphere (theme). This allows styling custom components appropriately.
+This singleton type is used to retrieve information about the currently used Atmosphere (theme). This makes it possible to theme custom components consistently.
 
 ## Property Documentation
 

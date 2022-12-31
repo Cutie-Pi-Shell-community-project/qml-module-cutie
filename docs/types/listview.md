@@ -20,6 +20,6 @@ Extends QtQuick.Controls 2 ListView with a possibility of an additional hamburge
 
 [CutieMenu](menu)
 
-Can be set to add a hamburger menu the can be popped up by the user. If not set, the menu button will not be visible.
+Can be set to add a hamburger menu that can be popped up by the user. If not set, the menu button will not be visible.
 
-**Note:** The menu button acts as a footer of the ListView with `footerPositioning` set to `ListView.OverlayFooter`. Setting the `footer` property manually will override this button which makes the menu unusable by the user unless another way of opening tme menu is implemented.
+**Note:** The menu button acts as a footer of the ListView with `footerPositioning` set to `ListView.OverlayFooter`. Setting the `footer` property manually will override this button which makes the menu unusable by the user unless another way of opening the menu is implemented.

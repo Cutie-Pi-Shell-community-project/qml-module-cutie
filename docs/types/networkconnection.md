@@ -17,7 +17,7 @@ Inherits: QObject
 
 ## Detailed Description
 
-CutieNetworkConnection is a type representing a network connection saved to [NetworkManager](https://networkmanager.dev/). For wireless networks,  [CutieWifiSettings.addAndActivateConnection](wifisettings#addandactivateconnection) can be used to store a new connection and activate it immediately. Also, [CutieWifiSettings.activateConnection](wifisettings#activateconnection) can be used to activate and connect an exisiting saved connection represented by an object of this type.
+CutieNetworkConnection is a type representing a network connection saved to [NetworkManager](https://networkmanager.dev/). For wireless networks,  [CutieWifiSettings.addAndActivateConnection](wifisettings#addandactivateconnection) can be used to store a new connection and activate it immediately. Also, [CutieWifiSettings.activateConnection](wifisettings#activateconnection) can be used to activate an existing saved connection represented by an object of this type.
 
 ## Property Documentation
 

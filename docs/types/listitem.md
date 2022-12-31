@@ -34,4 +34,4 @@ If true, filters the icon to be colored black or white depending on the atmosphe
 
 [CutieMenu](menu)
 
-Can be set to add a context menu the will pop up on `pressAndHold` signal.
+Can be set to add a context menu that will pop up on `pressAndHold` signal.

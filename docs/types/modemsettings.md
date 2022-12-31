@@ -12,7 +12,7 @@ Inherits: QObject
 
 ## Detailed Description
 
-CutieModemSettings is a singleton type providing settings and system integration inteface for application that need access to the modem. Currently, it supports modems found on [Ofono](https://git.kernel.org/pub/scm/network/ofono/ofono.git) D-Bus service, but support for [ModemManager](https://www.freedesktop.org/wiki/Software/ModemManager/) is planned.
+CutieModemSettings is a singleton type providing settings and system integration interface for applications that need access to the modem. Currently, it supports modems found on [Ofono](https://git.kernel.org/pub/scm/network/ofono/ofono.git) D-Bus service, but support for [ModemManager](https://www.freedesktop.org/wiki/Software/ModemManager/) is planned.
 
 ## Property Documentation
 
@@ -20,4 +20,4 @@ CutieModemSettings is a singleton type providing settings and system integration
 
 list&lt;CutieModem&gt;, readonly
 
-Holds a list if available modems. See [CutieOfonoModem](ofonomodem) for information about interacting with the listed modems.
+Holds a list of the available modems. See [CutieOfonoModem](ofonomodem) for information about interacting with the listed modems.
