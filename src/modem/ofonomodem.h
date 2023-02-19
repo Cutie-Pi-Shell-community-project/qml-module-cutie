@@ -6,6 +6,7 @@
 #include <QDBusReply>
 #include <QDBusMetaType>
 #include "cutiemodem.h"
+#include "ofonocall.h"
 
 class OfonoModem : public CutieModem
 {
@@ -19,21 +20,20 @@ public:
 
     void setPath(QString path) override;
     Q_INVOKABLE void sendMessage(QString to, QString message) override;
+    Q_INVOKABLE QString dial(QString to, QString hideID = QString()) override;
 Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);
     void simDataChanged(QVariantMap);
 	void incomingMessage(QString message, QVariantMap props);
+	void newCall(OfonoCall* call);
 
 public Q_SLOTS:
     void onPropertyChanged(QString name, QVariant value);
     void onSimPropertyChanged(QString name, QVariant value);
 	void onIncomingMessage(QString message, QVariantMap props);
-
-private:
-    QString m_path;
-    QVariantMap m_data;
-    QVariantMap m_simData;
+	void onCallAdded(QDBusObjectPath path, QVariantMap props);
+	void onCallRemoved(QDBusObjectPath path);
 };
 
 typedef QPair<QDBusObjectPath, QVariantMap> OfonoServicePair;

@@ -12,7 +12,9 @@ SOURCES += src/plugin.cpp \
 	src/wifi/cutienetworkconnection.cpp \
 	src/modem/modemsettings.cpp \
 	src/modem/cutiemodem.cpp \
+	src/modem/cutiecall.cpp \
 	src/modem/ofonomodem.cpp \
+	src/modem/ofonocall.cpp \
 	src/notifications/notifications.cpp \
 	src/volume/cutievolume.cpp \
 	src/store/cutiestore.cpp
@@ -24,7 +26,9 @@ HEADERS += src/plugin.h \
 	src/wifi/cutienetworkconnection.h \
 	src/modem/modemsettings.h \
 	src/modem/cutiemodem.h \
+	src/modem/cutiecall.h \
 	src/modem/ofonomodem.h \
+	src/modem/ofonocall.h \
 	src/notifications/notifications.h \
 	src/volume/cutievolume.h \
 	src/store/cutiestore.h
