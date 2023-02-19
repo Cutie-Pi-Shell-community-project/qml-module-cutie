@@ -49,6 +49,20 @@ void OfonoModem::setPath(QString path) {
 		"org.ofono.MessageManager", 
 		"IncomingMessage",
 		this, SLOT(onIncomingMessage(QString,QVariantMap)));
+
+	QDBusConnection::systemBus().connect(
+		"org.ofono",
+		m_path, 
+		"org.ofono.VoiceCallManager", 
+		"CallAdded",
+		this, SLOT(onCallAdded(QDBusObjectPath,QVariantMap)));
+
+	QDBusConnection::systemBus().connect(
+		"org.ofono",
+		m_path, 
+		"org.ofono.VoiceCallManager", 
+		"CallRemoved",
+		this, SLOT(onCallRemoved(QDBusObjectPath)));
 }
 
 void OfonoModem::onPropertyChanged(QString name, QVariant value) {
@@ -65,6 +79,16 @@ void OfonoModem::onIncomingMessage(QString message, QVariantMap props) {
 	emit incomingMessage(message, props);
 }
 
+void OfonoModem::onCallAdded(QDBusObjectPath path, QVariantMap props) {
+	OfonoCall *call = new OfonoCall(this, path.path(), props);
+	m_calls.insert(path.path(), call);
+	emit newCall(call);
+}
+
+void OfonoModem::onCallRemoved(QDBusObjectPath path) {
+	m_calls.remove(path.path());
+}
+
 void OfonoModem::sendMessage(QString to, QString message) {
 	QDBusInterface(
 		"org.ofono",
@@ -72,4 +96,16 @@ void OfonoModem::sendMessage(QString to, QString message) {
 		"org.ofono.MessageManager",
 		QDBusConnection::systemBus()
 	).call("SendMessage", to, message);
+}
+
+QString OfonoModem::dial(QString to, QString hideID) {
+	QDBusReply<QDBusObjectPath> path = QDBusInterface(
+		"org.ofono",
+		m_path, 
+		"org.ofono.VoiceCallManager",
+		QDBusConnection::systemBus()
+	).call("Dial", to, hideID);
+	if (path.isValid()) 
+		return path.value().path();
+	return QString();
 }
