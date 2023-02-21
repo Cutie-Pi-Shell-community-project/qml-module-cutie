@@ -1,5 +1,5 @@
-import QtQuick 2.14
-import Cutie 1.0
+import QtQuick
+import Cutie
 
 ListView {
     function show(text, duration) {
