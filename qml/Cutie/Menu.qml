@@ -18,7 +18,7 @@ Menu {
 		id: backgroundRect
 		anchors.fill: parent
 		radius: 5
-		color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+		color: Atmosphere.primaryColor
 	}
 
 	enter: Transition {

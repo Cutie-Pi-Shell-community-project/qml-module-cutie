@@ -16,7 +16,7 @@ MenuItem {
 		anchors.leftMargin: 10
 		anchors.rightMargin: 10
 		opacity: highlighted || pressed ? 1.0 : 0.0
-		color: (Atmosphere.variant == "dark") ? "#5c000000" : "#5cffffff"
+		color: Atmosphere.primaryColor
 	}
 
 	contentItem: RowLayout {
@@ -42,7 +42,7 @@ MenuItem {
 			ColorOverlay {
 				anchors.fill: iconImage
 				source: iconImage
-				color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
+				color: Atmosphere.textColor
 			}
 		}
 
@@ -52,7 +52,7 @@ MenuItem {
 				text: root.text
 				font.pixelSize: 15
 				font.family: "Lato"
-				color: (Atmosphere.variant == "dark") ? "black" : "white"
+				color: Atmosphere.textColor
         			Layout.fillWidth: true
 			}
 		}

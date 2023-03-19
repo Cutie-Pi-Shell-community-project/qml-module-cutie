@@ -16,22 +16,20 @@ Button {
         id: backgroundRect
         anchors.fill: parent
         radius: 5
-        color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+        color: Atmosphere.primaryColor
         Rectangle {
             anchors.fill: parent
             radius: 5
-            color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
-            opacity: root.pressed || root.checked ? .25 : 0
+            color: Atmosphere.secondaryColor
+            opacity: root.pressed || root.checked ? .75 : 0
         }
     }
     contentItem: Label {
         text: root.text
         font: root.font
-        color: (Atmosphere.variant == "dark") ? "#000000" : "#ffffff"
+        color: Atmosphere.textColor
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         anchors.centerIn: parent
     }
 }
-
-

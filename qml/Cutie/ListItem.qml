@@ -53,7 +53,7 @@ Button {
 			ColorOverlay {
 				anchors.fill: iconImage
 				source: iconImage
-				color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+				color: Atmosphere.textColor
 				visible: root.iconOverlay
 			}
 		}
@@ -66,7 +66,7 @@ Button {
 				text: root.text
 				font.pixelSize: 15
 				font.family: "Lato"
-				color: (Atmosphere.variant == "dark") ? "white" : "black"
+				color: Atmosphere.textColor
         			Layout.fillWidth: true
 				wrapMode: Text.Wrap
 			}
@@ -76,7 +76,7 @@ Button {
 				visible: root.subText !== ""
 				font.pixelSize: 10
 				font.family: "Lato"
-				color: (Atmosphere.variant == "dark") ? "white" : "black"
+				color: Atmosphere.textColor
         			Layout.fillWidth: true
 				wrapMode: Text.Wrap
 			}
