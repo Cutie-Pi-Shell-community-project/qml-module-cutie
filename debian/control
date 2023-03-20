@@ -4,6 +4,7 @@ Maintainer: Erik Inkinen <erik.inkinen@gmail.com>
 Priority: optional
 Build-Depends: pkg-kde-tools,
                cmake,
+               libgles-dev,
                qt6-base-dev,
                pkg-config,
                qt6-declarative-dev,
