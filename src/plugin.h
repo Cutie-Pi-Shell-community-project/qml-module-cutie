@@ -1,3 +1,4 @@
+#pragma once
 #include <QDebug>
 #include <QtQuick>
 #include <QtQml/qqml.h>
@@ -7,6 +8,7 @@
 #include "wifi/wifisettings.h"
 #include "modem/modemsettings.h"
 #include "modem/ofonomodem.h"
+#include "modem/ofonocall.h"
 #include "notifications/notifications.h"
 #include "volume/cutievolume.h"
 #include "store/cutiestore.h"

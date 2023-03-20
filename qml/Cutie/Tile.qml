@@ -1,7 +1,6 @@
-import Cutie 1.0
-import QtQuick 2.14
-import QtGraphicalEffects 1.15
-import Cutie 1.0
+import QtQuick
+import Qt5Compat.GraphicalEffects
+import Cutie
 
 
 Rectangle {

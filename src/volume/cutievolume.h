@@ -1,3 +1,4 @@
+#pragma once
 #include <QDebug>
 #include <QtQuick>
 #include <QtQml/qqml.h>
