@@ -7,6 +7,7 @@
 #include <QDBusMetaType>
 
 class CutieModem;
+Q_MOC_INCLUDE("src/modem/cutiemodem.h")
 
 class CutieCall : public QObject
 {
