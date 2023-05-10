@@ -12,9 +12,9 @@ Build-Depends: pkg-kde-tools,
                libpulse-dev
 Standards-Version: 4.5.1
 
-Package: qml-module-cutie
+Package: qml6-module-cutie
 Architecture: any
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${misc:Depends}, ${shlibs:Depends}, cutie-settings-daemon, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtsensors, qml6-module-qt5compat-graphicaleffects, fonts-lato
-Description: This package contains a QML module for Cutie specific functionality.
+Description: This package contains a QML (Qt6) module for Cutie specific functionality.
