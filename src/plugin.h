@@ -12,6 +12,7 @@
 #include "notifications/notifications.h"
 #include "volume/cutievolume.h"
 #include "store/cutiestore.h"
+#include "mobilenetwork/mobilenetwork.h"
 
 class CutiePlugin : public QQmlExtensionPlugin
 {

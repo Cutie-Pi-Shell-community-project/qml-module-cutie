@@ -22,7 +22,8 @@ set(plugin_SOURCES
     src/volume/cutievolume.cpp src/volume/cutievolume.h
     src/wifi/cutienetworkconnection.cpp src/wifi/cutienetworkconnection.h
     src/wifi/wifiaccesspoint.cpp src/wifi/wifiaccesspoint.h
-    src/wifi/wifisettings.cpp src/wifi/wifisettings.h)
+    src/wifi/wifisettings.cpp src/wifi/wifisettings.h
+    src/mobilenetwork/mobilenetwork.cpp src/mobilenetwork/mobilenetwork.h)
 
 qt_add_dbus_interface(plugin_SOURCES org.cutie_shell.xml cutie_shell_interface)
 
