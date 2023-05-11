@@ -44,20 +44,29 @@ MobileNetwork::MobileNetwork(QObject *parent) : QObject(parent) {
         QDBusConnection::systemBus()
         );
 
-    QDBusReply<QDBusVariant> conReply = deviceInterface.call(
+    m_mobileDataEnabled = false;
+
+    QDBusReply<QDBusVariant> actConReply = deviceInterface.call(
         "Get", "org.freedesktop.NetworkManager.Device", "ActiveConnection"
         );
-    if (!conReply.isValid()){
-        qDebug()<<conReply.error();
+    if (!actConReply.isValid()){
+        qDebug()<<actConReply.error();
     } else {
-        QDBusObjectPath repPath = qdbus_cast<QDBusObjectPath>(conReply.value().variant());
-        if(repPath.path() != "/"){
-            m_mobileDataEnabled = true;
-            m_activeConnection = repPath;
-            emit mobileDataEnabledChanged(m_mobileDataEnabled);
+        QDBusInterface actConIface(
+            "org.freedesktop.NetworkManager",
+            qdbus_cast<QDBusObjectPath>(actConReply.value().variant()).path(), 
+            "org.freedesktop.DBus.Properties",
+            QDBusConnection::systemBus()
+        );
+        QDBusReply<QDBusVariant> conReply = actConIface.call(
+            "Get", "org.freedesktop.NetworkManager.Connection.Active", "Connection"
+        );
+        if (!conReply.isValid()){
+            qDebug()<<conReply.error();
         } else {
-            m_mobileDataEnabled = false;
-            m_activeConnection = repPath;
+            m_activeConnection = qdbus_cast<QDBusObjectPath>(conReply.value().variant());
+            m_mobileDataEnabled = m_activeConnection.path() != "/";
+            emit activeConnectionChanged(m_activeConnection.path());
             emit mobileDataEnabledChanged(m_mobileDataEnabled);
         }
     }
@@ -119,6 +128,10 @@ QVariantList MobileNetwork::availableConnections(){
     return m_availableConnections;
 }
 
+QString MobileNetwork::activeConnection(){
+    return m_activeConnection.path();
+}
+
 void MobileNetwork::setMobileDataEnabled(bool mobileDataEnabled) {
     if(!mobileDataEnabled){
         QDBusInterface(
@@ -130,30 +143,11 @@ void MobileNetwork::setMobileDataEnabled(bool mobileDataEnabled) {
         m_mobileDataEnabled = mobileDataEnabled;
         emit mobileDataEnabledChanged(m_mobileDataEnabled);
     } else {
-        QDBusObjectPath specObj;
-        specObj.setPath("/");
-
-        QDBusObjectPath connPath;
-        connPath.setPath(m_availableConnections[0].toMap().value("path").toString());
-        QDBusReply<QDBusObjectPath> connsReply = QDBusInterface(
-            "org.freedesktop.NetworkManager",
-            "/org/freedesktop/NetworkManager", 
-            "org.freedesktop.NetworkManager",
-            QDBusConnection::systemBus()
-        ).call("ActivateConnection", 
-            connPath, 
-            m_path, 
-            specObj);
-
-        if(!connsReply.isValid()){
-            qDebug()<<connsReply.error();
-        } else {
-            m_activeConnection = connsReply.value();
-            m_mobileDataEnabled = mobileDataEnabled;
-            emit mobileDataEnabledChanged(m_mobileDataEnabled);
-        }
-        syncOfonoContext(m_availableConnections[0].toMap().value("name").toString(), 
-            m_availableConnections[0].toMap().value("apn").toString());
+        if (m_activeConnection.path() == "/")
+            return;
+        m_mobileDataEnabled = true;
+        setActiveConnection(m_activeConnection.path());
+        emit mobileDataEnabledChanged(m_mobileDataEnabled);
     }
 }
 
@@ -172,11 +166,40 @@ void MobileNetwork::setCellularEnabled(bool cellularEnabled) {
     QDBusConnection::systemBus().call(message);
 }
 
-void MobileNetwork::addAndActivateConnection(QString con_name, QString apn){
-    QMap<QString,QMap<QString,QVariant>> data;
-    QDBusObjectPath specObj;
-    specObj.setPath("/");
+void MobileNetwork::setActiveConnection(QString path) {
+    setMobileDataEnabled(false);
 
+    QDBusReply<QDBusObjectPath> connsReply = QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+        "org.freedesktop.NetworkManager",
+        QDBusConnection::systemBus()
+        ).call("ActivateConnection", 
+        QDBusObjectPath(path), 
+        m_path, 
+        QDBusObjectPath("/"));
+
+    if(!connsReply.isValid()){
+        qDebug()<<connsReply.error();
+    } else {
+        m_activeConnection = QDBusObjectPath(path);
+        scanAvailableConnections();
+        foreach (QVariant connection, m_availableConnections) {
+            if (connection.toMap().value("path").toString() == path) {
+                syncOfonoContext(
+                    connection.toMap().value("name").toString(), 
+                    connection.toMap().value("apn").toString());
+            }
+        }
+        emit activeConnectionChanged(m_activeConnection.path());
+    }
+}
+
+QString MobileNetwork::addConnection(QString con_name, QString apn){ 
+    bool wasMobileDataEnabled = m_mobileDataEnabled; 
+    setMobileDataEnabled(false);
+
+    QMap<QString,QMap<QString,QVariant>> data;
     QMap<QString,QVariant> conn;
     conn.insert("id", con_name);
     data.insert("connection", conn);
@@ -189,25 +212,33 @@ void MobileNetwork::addAndActivateConnection(QString con_name, QString apn){
 
     QDBusReply<QDBusObjectPath> connsReply = QDBusInterface(
         "org.freedesktop.NetworkManager",
-        "/org/freedesktop/NetworkManager", 
-        "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager/Settings", 
+        "org.freedesktop.NetworkManager.Settings",
         QDBusConnection::systemBus()
-        ).call("AddAndActivateConnection", 
-        QVariant::fromValue<QMap<QString,QMap<QString,QVariant>>>(data), 
-        m_path, 
-        specObj);
+        ).call("AddConnection", 
+        QVariant::fromValue<QMap<QString,QMap<QString,QVariant>>>(data));
 
     if(!connsReply.isValid()){
         qDebug()<<connsReply.error();
     } else {
-        m_activeConnection = connsReply.value();
         scanAvailableConnections();
         syncOfonoContext(con_name, apn);
         emit mobileDataEnabledChanged(m_mobileDataEnabled);
+        setMobileDataEnabled(wasMobileDataEnabled);
+        return connsReply.value().path();
     }
+    return "/";
+}
+
+void MobileNetwork::addAndActivateConnection(QString con_name, QString apn){ 
+    QString conPath = addConnection(con_name, apn);
+    setActiveConnection(conPath);
 }
 
 void MobileNetwork::updateConnection(QString path, QString con_name, QString apn){
+    bool wasMobileDataEnabled = m_mobileDataEnabled;
+    setMobileDataEnabled(false);
+
     QMap<QString,QMap<QString,QVariant>> data;
 
     QMap<QString,QVariant> conn;
@@ -219,8 +250,6 @@ void MobileNetwork::updateConnection(QString path, QString con_name, QString apn
     gsm.insert("apn", apn);
     gsm.insert("device-id", m_deviceId);
     data.insert("gsm", gsm);
-
-    setMobileDataEnabled(false);
     QDBusInterface(
         "org.freedesktop.NetworkManager",
         path, 
@@ -232,19 +261,51 @@ void MobileNetwork::updateConnection(QString path, QString con_name, QString apn
 
     scanAvailableConnections();
     syncOfonoContext(con_name, apn);
-    setMobileDataEnabled(true);
+    setMobileDataEnabled(wasMobileDataEnabled);
+}
+
+void MobileNetwork::deleteConnection(QString path){
+    bool wasMobileDataEnabled = m_mobileDataEnabled;
+    setMobileDataEnabled(false);
+    QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        path, 
+        "org.freedesktop.NetworkManager.Settings.Connection",
+        QDBusConnection::systemBus()
+        ).call("Delete");
+
+    if (m_activeConnection.path() == path) {
+        m_activeConnection.setPath("/");
+        activeConnectionChanged(m_activeConnection.path());
+    } else {
+        setMobileDataEnabled(wasMobileDataEnabled);
+    }
+
+    scanAvailableConnections();
 }
 
 void MobileNetwork::onDevicePropertiesChanged(QString iface, QMap<QString, QVariant> updated, QStringList invalidated) {
     Q_UNUSED(invalidated);
     if (iface == "org.freedesktop.NetworkManager.Device") {
-        if (updated.contains("ActiveConnection")) {
-            m_activeConnection = qdbus_cast<QDBusObjectPath>(updated.value("ActiveConnection"));
-            if(m_activeConnection.path() == "/"){
-                m_mobileDataEnabled = false;
+        if (updated.contains("ActiveConnection")) {            
+            QDBusInterface actConIface(
+                "org.freedesktop.NetworkManager",
+                qdbus_cast<QDBusObjectPath>(updated.value("ActiveConnection")).path(),
+                "org.freedesktop.DBus.Properties",
+                QDBusConnection::systemBus()
+            );
+            QDBusReply<QDBusVariant> conReply = actConIface.call(
+                "Get", "org.freedesktop.NetworkManager.Connection.Active", "Connection"
+            );
+            if (!conReply.isValid()){
+                qDebug()<<conReply.error();
+                m_activeConnection = QDBusObjectPath("/");
             } else {
-                m_mobileDataEnabled = true;
+                m_activeConnection = qdbus_cast<QDBusObjectPath>(conReply.value().variant());
             }
+            
+            m_mobileDataEnabled = m_activeConnection.path() != "/";
+            emit activeConnectionChanged(m_activeConnection.path());
             emit mobileDataEnabledChanged(m_mobileDataEnabled);
         }
     }

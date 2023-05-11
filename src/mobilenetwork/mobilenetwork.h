@@ -11,6 +11,7 @@ class MobileNetwork : public QObject
     Q_PROPERTY(bool mobileDataEnabled READ mobileDataEnabled WRITE setMobileDataEnabled NOTIFY mobileDataEnabledChanged)
     Q_PROPERTY(bool cellularEnabled READ cellularEnabled WRITE setCellularEnabled NOTIFY cellularEnabledChanged)
     Q_PROPERTY(QVariantList availableConnections READ availableConnections NOTIFY availableConnectionsChanged)
+    Q_PROPERTY(QString activeConnection READ activeConnection WRITE setActiveConnection NOTIFY activeConnectionChanged)
 
 public:
     MobileNetwork(QObject *parent=0);
@@ -19,11 +20,15 @@ public:
     bool mobileDataEnabled();
     bool cellularEnabled();
     QVariantList availableConnections();
+    QString activeConnection();
 
     void setMobileDataEnabled(bool mobileDataEnabled);
     void setCellularEnabled(bool cellularEnabled);
+    void setActiveConnection(QString path);
     Q_INVOKABLE void addAndActivateConnection(QString con_name, QString apn);
+    Q_INVOKABLE QString addConnection(QString con_name, QString apn);
     Q_INVOKABLE void updateConnection(QString path, QString con_name, QString apn);
+    Q_INVOKABLE void deleteConnection(QString path);
 
     static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine);
 
@@ -31,6 +36,7 @@ Q_SIGNALS:
     void mobileDataEnabledChanged(bool);
     void availableConnectionsChanged();
     void cellularEnabledChanged(bool);
+    void activeConnectionChanged(QString);
 
 public Q_SLOTS:
     void onDevicePropertiesChanged(QString iface, QMap<QString, QVariant> updated, QStringList invalidated);
