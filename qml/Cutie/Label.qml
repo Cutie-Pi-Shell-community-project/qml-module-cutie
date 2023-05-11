@@ -7,5 +7,5 @@ import Cutie
 Label {
 	font.pixelSize: 15
 	font.family: "Lato"
-	color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+	color: Atmosphere.textColor
 }

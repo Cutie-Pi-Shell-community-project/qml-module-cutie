@@ -4,6 +4,6 @@ import Cutie
 
 
 Rectangle {
-	color: (Atmosphere.variant == "dark") ? "#5cffffff" : "#5c000000"
+	color: Atmosphere.secondaryColor
 	radius: 5
 }

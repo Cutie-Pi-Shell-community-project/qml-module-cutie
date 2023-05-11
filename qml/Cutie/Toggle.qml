@@ -16,7 +16,7 @@ Switch {
         height: 3
         width: root.availableWidth - root.rightPadding - root.leftPadding
         radius: height / 2
-        color: (Atmosphere.variant == "dark") ? "#8fffffff" : "#60000000"
+        color: Atmosphere.textColor
     }
 
     indicator: Rectangle {
@@ -25,7 +25,7 @@ Switch {
         width: 20
         height: 20
         radius: width / 2
-        color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+        color: Atmosphere.textColor
 
         Behavior on x {
             NumberAnimation { duration: 100 }

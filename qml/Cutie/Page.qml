@@ -22,12 +22,13 @@ Page {
         width: 25
         height: 25
         gradient: Gradient {
-            GradientStop { position: 0.0; color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000" }
+            GradientStop { position: 0.0; color: Atmosphere.textColor }
             GradientStop { position: 0.5; color: "transparent" }
         }
         anchors.horizontalCenter: parent.left
         anchors.top: parent.top
         anchors.topMargin: 22
+        anchors.leftMargin: 25
         Behavior on opacity {
             NumberAnimation { properties: "opacity"; easing.type: Easing.InOutQuad; duration: 500 }
         }

@@ -20,8 +20,9 @@ Item {
         font.pixelSize: 34
         font.family: "Lato"
         font.weight: Font.Bold
+        font.capitalization: Font.Capitalize
         horizontalAlignment: Text.AlignLeft
-    	color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+    	color: Atmosphere.textColor
     }
 
     Text {
@@ -36,6 +37,6 @@ Item {
         font.family: "Lato"
         font.weight: Font.Normal
         horizontalAlignment: Text.AlignLeft
-    	color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+    	color: Atmosphere.textColor
     }
 }

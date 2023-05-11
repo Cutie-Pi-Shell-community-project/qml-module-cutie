@@ -7,7 +7,7 @@ import Cutie
 TextField {
     id: root
     
-    color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+    color: Atmosphere.textColor
     clip: true
     font.family: "Lato"
     font.pixelSize: 15 
@@ -19,8 +19,6 @@ TextField {
         x: 5
         width: parent.width - 10
         radius: 2
-        color: (Atmosphere.variant == "dark") ? "#ffffff" : "#000000"
+        color: parent.focus ? Atmosphere.accentColor : Atmosphere.textColor
     }
 }
-
-
