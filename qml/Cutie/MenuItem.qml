@@ -16,7 +16,7 @@ MenuItem {
 		anchors.leftMargin: 10
 		anchors.rightMargin: 10
 		opacity: highlighted || pressed ? 1.0 : 0.0
-		color: Atmosphere.primaryColor
+		color: Atmosphere.secondaryColor
 	}
 
 	contentItem: RowLayout {
