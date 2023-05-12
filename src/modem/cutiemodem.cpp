@@ -35,6 +35,10 @@ QVariantMap CutieModem::simData() {
 	return m_simData;
 }
 
+QVariantMap CutieModem::netData() {
+	return m_netData;
+}
+
 uint CutieModem::audioMode() {
 	return m_audioMode;
 }

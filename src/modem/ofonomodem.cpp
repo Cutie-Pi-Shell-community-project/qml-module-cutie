@@ -28,20 +28,38 @@ void OfonoModem::setPath(QString path) {
 		m_simData = simProps.value();
 	else m_simData = QVariantMap();
 	emit simDataChanged(m_simData);
+	
+	QDBusReply<QVariantMap> netProps = QDBusInterface(
+		"org.ofono",
+		m_path, 
+		"org.ofono.NetworkRegistration",
+		QDBusConnection::systemBus()
+	).call("GetProperties");
+	if (netProps.isValid())
+		m_netData = netProps.value();
+	else m_netData = QVariantMap();
+	emit netDataChanged(m_netData);
 
 	QDBusConnection::systemBus().connect(
 		"org.ofono",
 		m_path, 
 		"org.ofono.Modem", 
-		"ProperyChanged",
-		this, SLOT(onPropertyChanged(QString,QVariant)));
+		"PropertyChanged",
+		this, SLOT(onPropertyChanged(QString,QDBusVariant)));
 
 	QDBusConnection::systemBus().connect(
 		"org.ofono",
 		m_path, 
 		"org.ofono.SimManager", 
-		"ProperyChanged",
-		this, SLOT(onSimPropertyChanged(QString,QVariant)));
+		"PropertyChanged",
+		this, SLOT(onSimPropertyChanged(QString,QDBusVariant)));
+
+	QDBusConnection::systemBus().connect(
+		"org.ofono",
+		m_path, 
+		"org.ofono.NetworkRegistration", 
+		"PropertyChanged",
+		this, SLOT(onNetPropertyChanged(QString,QDBusVariant)));
 
 	QDBusConnection::systemBus().connect(
 		"org.ofono",
@@ -65,14 +83,19 @@ void OfonoModem::setPath(QString path) {
 		this, SLOT(onCallRemoved(QDBusObjectPath)));
 }
 
-void OfonoModem::onPropertyChanged(QString name, QVariant value) {
-	m_data.insert(name, value);
+void OfonoModem::onPropertyChanged(QString name, QDBusVariant value) {
+	m_data.insert(name, value.variant());
 	emit dataChanged(m_data);
 }
 
-void OfonoModem::onSimPropertyChanged(QString name, QVariant value) {
-	m_simData.insert(name, value);
+void OfonoModem::onSimPropertyChanged(QString name, QDBusVariant value) {
+	m_simData.insert(name, value.variant());
 	emit simDataChanged(m_simData);
+}
+
+void OfonoModem::onNetPropertyChanged(QString name, QDBusVariant value) {
+	m_netData.insert(name, value.variant());
+	emit netDataChanged(m_netData);
 }
 
 void OfonoModem::onIncomingMessage(QString message, QVariantMap props) {

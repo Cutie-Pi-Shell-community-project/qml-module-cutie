@@ -14,6 +14,7 @@ class OfonoModem : public CutieModem
     Q_PROPERTY (QString path READ path() NOTIFY pathChanged);
     Q_PROPERTY (QVariantMap data READ data() NOTIFY dataChanged);
     Q_PROPERTY (QVariantMap simData READ simData() NOTIFY simDataChanged);
+    Q_PROPERTY (QVariantMap netData READ netData() NOTIFY netDataChanged);
 public:
     OfonoModem(QObject *parent=0);
     ~OfonoModem();
@@ -25,12 +26,14 @@ Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);
     void simDataChanged(QVariantMap);
+    void netDataChanged(QVariantMap);
 	void incomingMessage(QString message, QVariantMap props);
 	void newCall(OfonoCall* call);
 
 public Q_SLOTS:
-    void onPropertyChanged(QString name, QVariant value);
-    void onSimPropertyChanged(QString name, QVariant value);
+    void onPropertyChanged(QString name, QDBusVariant value);
+    void onSimPropertyChanged(QString name, QDBusVariant value);
+    void onNetPropertyChanged(QString name, QDBusVariant value);
 	void onIncomingMessage(QString message, QVariantMap props);
 	void onCallAdded(QDBusObjectPath path, QVariantMap props);
 	void onCallRemoved(QDBusObjectPath path);

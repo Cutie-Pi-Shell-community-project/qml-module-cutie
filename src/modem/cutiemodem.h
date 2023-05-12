@@ -13,6 +13,7 @@ class CutieModem : public QObject
     Q_PROPERTY (QString path READ path() NOTIFY pathChanged);
     Q_PROPERTY (QVariantMap data READ data() NOTIFY dataChanged);
     Q_PROPERTY (QVariantMap simData READ simData() NOTIFY simDataChanged);
+    Q_PROPERTY (QVariantMap netData READ netData() NOTIFY netDataChanged);
     Q_PROPERTY (uint audioMode READ audioMode() WRITE setAudioMode NOTIFY audioModeChanged);
 public:
     CutieModem(QObject *parent=0);
@@ -21,6 +22,7 @@ public:
     QString path();
     QVariantMap data();
     QVariantMap simData();
+    QVariantMap netData();
     uint audioMode();
     void setAudioMode(uint mode);
 
@@ -31,6 +33,7 @@ Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);
     void simDataChanged(QVariantMap);
+    void netDataChanged(QVariantMap);
     void audioModeChanged(uint mode);
 	void incomingMessage(QString message, QVariantMap props);
 	void newCall(CutieCall* call);
@@ -42,6 +45,7 @@ protected:
     QString m_path;
     QVariantMap m_data;
     QVariantMap m_simData;
+    QVariantMap m_netData;
     QMap<QString, CutieCall*> m_calls;
     uint m_audioMode;
 };
