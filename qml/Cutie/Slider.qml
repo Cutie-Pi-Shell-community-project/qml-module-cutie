@@ -17,7 +17,7 @@ Slider {
         height: 3
         width: root.availableWidth - root.rightPadding - root.leftPadding
         radius: height / 2
-        color: Atmosphere.textColor
+        color: Atmosphere.primaryAlphaColor
     }
 
     handle: Rectangle {

@@ -19,6 +19,6 @@ TextField {
         x: 5
         width: parent.width - 10
         radius: 2
-        color: parent.focus ? Atmosphere.accentColor : Atmosphere.textColor
+        color: parent.focus ? Atmosphere.accentColor : Atmosphere.primaryAlphaColor
     }
 }
