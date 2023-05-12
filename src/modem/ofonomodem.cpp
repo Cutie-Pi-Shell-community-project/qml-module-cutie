@@ -112,6 +112,33 @@ void OfonoModem::onCallRemoved(QDBusObjectPath path) {
 	m_calls.remove(path.path());
 }
 
+void OfonoModem::setProp(QString key, QVariant value) {
+	QDBusReply<QVariantMap> props = QDBusInterface(
+		"org.ofono",
+		m_path, 
+		"org.ofono.Modem",
+		QDBusConnection::systemBus()
+	).call("SetProperty", key, value);
+}
+
+void OfonoModem::setSimProp(QString key, QVariant value) {
+	QDBusReply<QVariantMap> props = QDBusInterface(
+		"org.ofono",
+		m_path, 
+		"org.ofono.SimManager",
+		QDBusConnection::systemBus()
+	).call("SetProperty", key, value);
+}
+
+void OfonoModem::setNetProp(QString key, QVariant value) {
+	QDBusReply<QVariantMap> props = QDBusInterface(
+		"org.ofono",
+		m_path, 
+		"org.ofono.NetworkRegistration",
+		QDBusConnection::systemBus()
+	).call("SetProperty", key, value);
+}
+
 void OfonoModem::sendMessage(QString to, QString message) {
 	QDBusInterface(
 		"org.ofono",

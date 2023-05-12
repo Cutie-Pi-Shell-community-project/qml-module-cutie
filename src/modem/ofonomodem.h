@@ -22,6 +22,9 @@ public:
     void setPath(QString path) override;
     Q_INVOKABLE void sendMessage(QString to, QString message) override;
     Q_INVOKABLE QString dial(QString to, QString hideID = QString()) override;
+    Q_INVOKABLE void setProp(QString key, QVariant value) override;
+    Q_INVOKABLE void setSimProp(QString key, QVariant value) override;
+    Q_INVOKABLE void setNetProp(QString key, QVariant value) override;
 Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);

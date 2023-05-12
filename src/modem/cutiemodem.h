@@ -29,6 +29,9 @@ public:
     virtual void setPath(QString path) = 0;
     virtual Q_INVOKABLE void sendMessage(QString to, QString message) = 0;
     virtual Q_INVOKABLE QString dial(QString to, QString hideID = QString()) = 0;
+    virtual Q_INVOKABLE void setProp(QString key, QVariant value) = 0;
+    virtual Q_INVOKABLE void setSimProp(QString key, QVariant value) = 0;
+    virtual Q_INVOKABLE void setNetProp(QString key, QVariant value) = 0;
 Q_SIGNALS:
     void pathChanged(QString);
     void dataChanged(QVariantMap);
