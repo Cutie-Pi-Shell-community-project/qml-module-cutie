@@ -5,6 +5,8 @@
 #include <QtQml/QQmlExtensionPlugin>
 #include "store/cutiestore.h"
 
+#define DEFAULT_ATMOSPHERE_PATH "file://usr/share/atmospheres/city/"
+
 class AtmosphereModel : public QObject
 {
     Q_OBJECT
