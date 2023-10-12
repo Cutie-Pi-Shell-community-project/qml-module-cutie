@@ -75,7 +75,7 @@ void CutieStore::saveData() {
 	QString filePath = QDir(dirPath).filePath(m_storeName + ".dat");
 	if (!QDir(dirPath).exists()) {
 		QDir(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation))
-			.mkdir(m_appName);
+			.mkpath(m_appName);
 	}
 	QFile saveFile(filePath);
 	if (!saveFile.open(QIODevice::WriteOnly))  {
