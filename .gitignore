@@ -11,3 +11,4 @@ cutie-settings-daemon
 *.so
 _site
 *.lock
+_build

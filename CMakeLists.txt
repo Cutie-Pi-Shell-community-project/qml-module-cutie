@@ -25,8 +25,6 @@ set(plugin_SOURCES
     src/wifi/wifisettings.cpp src/wifi/wifisettings.h
     src/mobilenetwork/mobilenetwork.cpp src/mobilenetwork/mobilenetwork.h)
 
-qt_add_dbus_interface(plugin_SOURCES org.cutie_shell.xml cutie_shell_interface)
-
 qt6_add_qml_module(qmlcutieplugin
     URI Cutie
     VERSION ${PROJECT_VERSION}

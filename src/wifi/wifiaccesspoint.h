@@ -3,7 +3,9 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
-#include "cutie_shell_interface.h"
+#include <QDBusConnection>
+#include <QDBusReply>
+#include <QDBusInterface>
 
 class WifiAccessPoint : public QObject
 {

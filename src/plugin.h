@@ -3,7 +3,6 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
-#include "cutie_shell_interface.h"
 #include "atmosphere/atmospheremodel.h"
 #include "wifi/wifisettings.h"
 #include "modem/modemsettings.h"
