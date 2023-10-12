@@ -3,12 +3,12 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
-#include "cutie_shell_interface.h"
+#include "store/cutiestore.h"
 
 class AtmosphereModel : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString path READ path NOTIFY pathChanged);
+    Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged);
     Q_PROPERTY(QString variant READ variant NOTIFY variantChanged);
 
     Q_PROPERTY(QString primaryColor READ primaryColor NOTIFY primaryColorChanged);
@@ -20,7 +20,7 @@ class AtmosphereModel : public QObject
 
     Q_PROPERTY(QVariantList atmosphereList READ atmosphereList NOTIFY atmosphereListChanged);
 
-    org::cutie_shell::SettingsDaemon::Atmosphere *atmosphere;
+    CutieStore atmosphereStore;
 
     QString p_path;
     QString p_variant;
@@ -39,8 +39,9 @@ public:
     ~AtmosphereModel();
 
     Q_INVOKABLE QString path();
-    Q_INVOKABLE QString variant();
+    Q_INVOKABLE void setPath(QString path);
 
+    Q_INVOKABLE QString variant();
     Q_INVOKABLE QString primaryColor();
     Q_INVOKABLE QString primaryAlphaColor();
     Q_INVOKABLE QString secondaryColor();
@@ -53,8 +54,7 @@ public:
     static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine);
 
 public Q_SLOTS:
-    void onAtmospherePathChanged();
-    void onAtmosphereVariantChanged();
+    void onAtmosphereDataChanged(QVariantMap data);
 
 Q_SIGNALS:
     void pathChanged();

@@ -4,13 +4,10 @@
 
 AtmosphereModel::AtmosphereModel(QObject *parent) : QObject(parent)
 {
-    this->atmosphere = new org::cutie_shell::SettingsDaemon::Atmosphere(
-        "org.cutie_shell.SettingsDaemon", "/atmosphere",
-        QDBusConnection::systemBus());
-    connect(this->atmosphere, SIGNAL(PathChanged()), this, SLOT(onAtmospherePathChanged()));
-    connect(this->atmosphere, SIGNAL(VariantChanged()), this, SLOT(onAtmosphereVariantChanged()));
-    onAtmospherePathChanged();
-    onAtmosphereVariantChanged();
+    atmosphereStore.setAppName("qml-module-cutie");
+    atmosphereStore.setStoreName("atmosphere");
+    connect(&atmosphereStore, SIGNAL(dataChanged(QVariantMap data)), this, SLOT(onAtmosphereDataChanged(QVariantMap data)));
+    onAtmosphereDataChanged(atmosphereStore.data());
 }
 
 AtmosphereModel::~AtmosphereModel()
@@ -19,6 +16,13 @@ AtmosphereModel::~AtmosphereModel()
 
 QString AtmosphereModel::path() {
     return p_path;
+}
+
+void AtmosphereModel::setPath(QString path) {
+    QVariantMap storeData = atmosphereStore.data();
+    storeData["path"] = QVariant(path);
+    atmosphereStore.setData(storeData);
+    onAtmosphereDataChanged(storeData);
 }
 
 QString AtmosphereModel::variant() {
@@ -53,9 +57,9 @@ QVariantList AtmosphereModel::atmosphereList() {
     return p_atmosphereList;
 }
 
-void AtmosphereModel::onAtmospherePathChanged() {
+void AtmosphereModel::onAtmosphereDataChanged(QVariantMap data) {
     QString old_path = p_path;
-    p_path = this->atmosphere->GetPath();
+    p_path = data["path"].toString();
     if (old_path != p_path) pathChanged();
 
     QStringList dirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
@@ -91,12 +95,8 @@ void AtmosphereModel::onAtmospherePathChanged() {
     accentColorChanged();
     p_textColor = "#"+settings.value("textColor").toString();
     textColorChanged();
-}
-
-void AtmosphereModel::onAtmosphereVariantChanged() {
-    QString old_variant = p_variant;
-    p_variant = this->atmosphere->GetVariant();
-    if (old_variant != p_variant) variantChanged();
+    p_variant = "#"+settings.value("variant").toString();
+    variantChanged();
 }
 
 QObject *AtmosphereModel::provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
