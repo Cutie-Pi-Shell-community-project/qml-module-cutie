@@ -6,7 +6,7 @@ AtmosphereModel::AtmosphereModel(QObject *parent) : QObject(parent)
 {
     atmosphereStore.setAppName("qml-module-cutie");
     atmosphereStore.setStoreName("atmosphere");
-    connect(&atmosphereStore, SIGNAL(dataChanged(QVariantMap data)), this, SLOT(onAtmosphereDataChanged(QVariantMap data)));
+    connect(&atmosphereStore, SIGNAL(dataChanged(QVariantMap)), this, SLOT(onAtmosphereDataChanged(QVariantMap)));
     onAtmosphereDataChanged(atmosphereStore.data());
 }
 
