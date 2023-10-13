@@ -33,6 +33,11 @@ SwipeView {
     
     function clear() { contentChildren.clear() }
     function push(page, properties) {
+        if (removeTimer.running) {
+            removeTimer.stop();
+            removeTimer.onTriggered();
+        }
+        
         if (!properties) properties = {}
         if (page instanceof Item) {
             for (p in properties) {
