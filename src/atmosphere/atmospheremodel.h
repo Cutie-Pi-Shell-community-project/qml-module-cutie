@@ -3,7 +3,7 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
-#include "store/cutiestore.h"
+#include <cutiestore.h>
 
 #define DEFAULT_ATMOSPHERE_PATH "file://usr/share/atmospheres/city/"
 

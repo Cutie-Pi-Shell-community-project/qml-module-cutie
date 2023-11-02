@@ -6,6 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Qml Quick)
 pkg_check_modules(LIBPULSE libpulse REQUIRED IMPORTED_TARGET)
+pkg_check_modules(CUTIESTORE cutiestore REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
@@ -18,7 +19,6 @@ set(plugin_SOURCES
     src/modem/ofonocall.cpp src/modem/ofonocall.h
     src/notifications/notifications.cpp src/notifications/notifications.h
     src/plugin.cpp src/plugin.h
-    src/store/cutiestore.cpp src/store/cutiestore.h
     src/volume/cutievolume.cpp src/volume/cutievolume.h
     src/wifi/cutienetworkconnection.cpp src/wifi/cutienetworkconnection.h
     src/wifi/wifiaccesspoint.cpp src/wifi/wifiaccesspoint.h
@@ -45,6 +45,7 @@ target_link_libraries(qmlcutieplugin PUBLIC
     Qt::Qml
     Qt::Quick
     PkgConfig::LIBPULSE
+    PkgConfig::CUTIESTORE
 )
 
 install(TARGETS qmlcutieplugin
