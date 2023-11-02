@@ -3,8 +3,10 @@
 #include <QtQuick>
 #include <QtQml/qqml.h>
 #include <QtQml/QQmlExtensionPlugin>
+
+#include <atmosphere.h>
 #include <cutiestore.h>
-#include "atmosphere/atmospheremodel.h"
+
 #include "wifi/wifisettings.h"
 #include "modem/modemsettings.h"
 #include "modem/ofonomodem.h"
