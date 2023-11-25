@@ -12,6 +12,7 @@ Build-Depends: pkg-kde-tools,
                libpulse-dev,
                libatmosphere-dev,
                libcutiestore-dev,
+               libcutiemodem-dev,
 Standards-Version: 4.5.1
 
 Package: qml6-module-cutie

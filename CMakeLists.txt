@@ -8,15 +8,11 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS DBus Gui Qml Quick)
 pkg_check_modules(LIBPULSE libpulse REQUIRED IMPORTED_TARGET)
 pkg_check_modules(CUTIESTORE cutiestore REQUIRED IMPORTED_TARGET)
 pkg_check_modules(ATMOSPHERE atmosphere REQUIRED IMPORTED_TARGET)
+pkg_check_modules(CUTIEMODEM cutiemodem REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
 set(plugin_SOURCES
-    src/modem/cutiemodem.cpp src/modem/cutiemodem.h
-    src/modem/cutiecall.cpp src/modem/cutiecall.h
-    src/modem/modemsettings.cpp src/modem/modemsettings.h
-    src/modem/ofonomodem.cpp src/modem/ofonomodem.h
-    src/modem/ofonocall.cpp src/modem/ofonocall.h
     src/notifications/notifications.cpp src/notifications/notifications.h
     src/plugin.cpp src/plugin.h
     src/volume/cutievolume.cpp src/volume/cutievolume.h
@@ -47,6 +43,7 @@ target_link_libraries(qmlcutieplugin PUBLIC
     PkgConfig::LIBPULSE
     PkgConfig::CUTIESTORE
     PkgConfig::ATMOSPHERE
+    PkgConfig::CUTIEMODEM
 )
 
 install(TARGETS qmlcutieplugin

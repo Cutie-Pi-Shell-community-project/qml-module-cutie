@@ -1,4 +1,5 @@
 #include "plugin.h"
+#include <QDBusMetaType>
 
 WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
     qDBusRegisterMetaType<QMap<QString,QMap<QString,QVariant>>>();

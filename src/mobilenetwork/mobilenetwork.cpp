@@ -1,4 +1,5 @@
 #include "plugin.h"
+#include <QDBusMetaType>
 
 MobileNetwork::MobileNetwork(QObject *parent) : QObject(parent) {
     qDBusRegisterMetaType<QMap<QString,QMap<QString,QVariant>>>();

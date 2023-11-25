@@ -55,3 +55,9 @@ private:
     void syncOfonoContext(QString name, QString apn);
     void setOfonoContextProperty(QString path, QString property, QVariant value);
 };
+
+typedef QPair<QDBusObjectPath, QVariantMap> OfonoServicePair;
+typedef QList<OfonoServicePair> OfonoServiceList;
+
+Q_DECLARE_METATYPE(OfonoServicePair)
+Q_DECLARE_METATYPE(OfonoServiceList)
