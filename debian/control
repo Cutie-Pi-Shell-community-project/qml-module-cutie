@@ -13,6 +13,7 @@ Build-Depends: pkg-kde-tools,
                libatmosphere-dev,
                libcutiestore-dev,
                libcutiemodem-dev,
+               libcutienotification-dev,
 Standards-Version: 4.5.1
 
 Package: qml6-module-cutie

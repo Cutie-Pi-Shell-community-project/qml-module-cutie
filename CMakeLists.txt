@@ -9,11 +9,11 @@ pkg_check_modules(LIBPULSE libpulse REQUIRED IMPORTED_TARGET)
 pkg_check_modules(CUTIESTORE cutiestore REQUIRED IMPORTED_TARGET)
 pkg_check_modules(ATMOSPHERE atmosphere REQUIRED IMPORTED_TARGET)
 pkg_check_modules(CUTIEMODEM cutiemodem REQUIRED IMPORTED_TARGET)
+pkg_check_modules(NOTIFICATION cutienotification REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
 set(plugin_SOURCES
-    src/notifications/notifications.cpp src/notifications/notifications.h
     src/plugin.cpp src/plugin.h
     src/volume/cutievolume.cpp src/volume/cutievolume.h
     src/wifi/cutienetworkconnection.cpp src/wifi/cutienetworkconnection.h
@@ -44,6 +44,7 @@ target_link_libraries(qmlcutieplugin PUBLIC
     PkgConfig::CUTIESTORE
     PkgConfig::ATMOSPHERE
     PkgConfig::CUTIEMODEM
+    PkgConfig::NOTIFICATION
 )
 
 install(TARGETS qmlcutieplugin
