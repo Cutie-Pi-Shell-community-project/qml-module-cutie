@@ -38,6 +38,8 @@ Q_SIGNALS:
 public Q_SLOTS:
     void onNewConnection(QDBusObjectPath path);
     void onConnectionRemoved(QDBusObjectPath path);
+    void onDeviceAdded(QDBusObjectPath path);
+    void onDeviceRemoved(QDBusObjectPath path);
     void onAccessPointAdded(QDBusObjectPath path);
     void onAccessPointRemoved(QDBusObjectPath path);
     void onPropertiesChanged(QString iface, QMap<QString, QVariant> updated, QStringList invalidated);

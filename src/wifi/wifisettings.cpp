@@ -31,57 +31,12 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
         ? qdbus_cast<bool>(enabledReply.value().variant())
         : false;
 
-    QDBusReply<QList<QDBusObjectPath>> devicesReply = networkManager.call("GetDevices");
-    if (!devicesReply.isValid()) return;
-    QList<QDBusObjectPath> devices = devicesReply.value();
+    QDBusReply<QList<QDBusObjectPath>> devicesReply = 
+        networkManager.call("GetDevices");
 
-    m_wlanPath = QDBusObjectPath("/");
-    foreach (QDBusObjectPath path, devices) {
-        QDBusInterface deviceInterface(
-            "org.freedesktop.NetworkManager",
-            path.path(), 
-            "org.freedesktop.DBus.Properties",
-            QDBusConnection::systemBus()
-        );
-        QDBusReply<QDBusVariant> typeReply = deviceInterface.call(
-            "Get", "org.freedesktop.NetworkManager.Device", "DeviceType"
-        );
-        if (typeReply.isValid()) {
-            uint type = qdbus_cast<uint>(typeReply.value().variant());
-            if (type == 2) { // Wireless LAN
-                m_wlanPath = path;
-                break;
-            }
-        }
-    }
-
-    if (m_wlanPath.path() == "") return;
-    
-    QDBusInterface deviceInterface(
-        "org.freedesktop.NetworkManager",
-        m_wlanPath.path(), 
-        "org.freedesktop.DBus.Properties",
-        QDBusConnection::systemBus()
-    );
-    QDBusReply<QDBusVariant> apReply = deviceInterface.call(
-        "Get", "org.freedesktop.NetworkManager.Device.Wireless", "AccessPoints"
-    );
-
-    if (!apReply.isValid()) return;
-    foreach (QDBusObjectPath path, qdbus_cast<QList<QDBusObjectPath>>(apReply.value().variant())) {
-        if (path.path() == "/") continue;
-        WifiAccessPoint* wifiAP = new WifiAccessPoint(this);
-        wifiAP->setPath(path.path());
-        m_accessPoints.insert(path, wifiAP);
-        emit accessPointsChanged(accessPoints());
-    }
-
-    apReply = deviceInterface.call(
-        "Get", "org.freedesktop.NetworkManager.Device.Wireless", "ActiveAccessPoint"
-    );
-    if (apReply.isValid()) {
-        m_activeAccessPoint = qdbus_cast<QDBusObjectPath>(apReply.value().variant());
-        emit activeAccessPointChanged(m_accessPoints.value(m_activeAccessPoint));
+    if (devicesReply.isValid()) {
+        QList<QDBusObjectPath> devices = devicesReply.value();
+        foreach (QDBusObjectPath path, devices) onDeviceAdded(path);
     }
 
     QDBusReply<QList<QDBusObjectPath>> connsReply = QDBusInterface(
@@ -112,6 +67,20 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
 
     QDBusConnection::systemBus().connect(
         "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+        "org.freedesktop.NetworkManager", 
+        "DeviceAdded",
+        this, SLOT(onDeviceAdded(QDBusObjectPath)));
+
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.NetworkManager",
+        "/org/freedesktop/NetworkManager", 
+        "org.freedesktop.NetworkManager", 
+        "DeviceRemoved",
+        this, SLOT(onDeviceRemoved(QDBusObjectPath)));
+
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.NetworkManager",
         "/org/freedesktop/NetworkManager/Settings", 
         "org.freedesktop.NetworkManager.Settings", 
         "NewConnection",
@@ -123,27 +92,6 @@ WifiSettings::WifiSettings(QObject *parent) : QObject(parent) {
         "org.freedesktop.NetworkManager.Settings", 
         "ConnectionRemoved",
         this, SLOT(onConnectionRemoved(QDBusObjectPath)));
-
-    QDBusConnection::systemBus().connect(
-        "org.freedesktop.NetworkManager",
-        m_wlanPath.path(), 
-        "org.freedesktop.NetworkManager.Device.Wireless", 
-        "AccessPointAdded",
-        this, SLOT(onAccessPointAdded(QDBusObjectPath)));
-
-    QDBusConnection::systemBus().connect(
-        "org.freedesktop.NetworkManager",
-        m_wlanPath.path(), 
-        "org.freedesktop.NetworkManager.Device.Wireless", 
-        "AccessPointRemoved",
-        this, SLOT(onAccessPointRemoved(QDBusObjectPath)));
-
-    QDBusConnection::systemBus().connect(
-        "org.freedesktop.NetworkManager",
-        m_wlanPath.path(), 
-        "org.freedesktop.DBus.Properties", 
-        "PropertiesChanged",
-        this, SLOT(onDevicePropertiesChanged(QString,QMap<QString, QVariant>,QStringList)));
 }
 
 WifiSettings::~WifiSettings() {}
@@ -174,6 +122,69 @@ void WifiSettings::onNewConnection(QDBusObjectPath path) {
 void WifiSettings::onConnectionRemoved(QDBusObjectPath path) {
     m_savedConnections.remove(path);
     emit savedConnectionsChanged(savedConnections());
+}
+
+void WifiSettings::onDeviceAdded(QDBusObjectPath path) {
+    if (m_wlanPath.path() != "") return;
+    QDBusReply<QVariantMap> devPropReply = QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        path.path(), 
+        "org.freedesktop.DBus.Properties",
+        QDBusConnection::systemBus()
+    ).call(
+        "GetAll", "org.freedesktop.NetworkManager.Device"
+    );
+            
+    if (devPropReply.isValid()) {
+        QVariantMap devProps = devPropReply.value();
+        uint type = devProps["DeviceType"].value<uint>();
+        if (type == 2) // Wireless LAN
+            m_wlanPath = path;
+    }
+
+    if (m_wlanPath.path() == "") return;
+
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.NetworkManager",
+        m_wlanPath.path(),
+        "org.freedesktop.NetworkManager.Device.Wireless",
+        "AccessPointAdded",
+        this, SLOT(onAccessPointAdded(QDBusObjectPath)));
+
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.NetworkManager",
+        m_wlanPath.path(),
+        "org.freedesktop.NetworkManager.Device.Wireless",
+        "AccessPointRemoved",
+        this, SLOT(onAccessPointRemoved(QDBusObjectPath)));
+
+    QDBusConnection::systemBus().connect(
+        "org.freedesktop.NetworkManager",
+        m_wlanPath.path(),
+        "org.freedesktop.DBus.Properties",
+        "PropertiesChanged",
+        this, SLOT(onDevicePropertiesChanged(QString,QMap<QString, QVariant>,QStringList)));
+
+    QDBusReply<QVariantMap> wlanPropReply = QDBusInterface(
+        "org.freedesktop.NetworkManager",
+        m_wlanPath.path(), 
+        "org.freedesktop.DBus.Properties",
+        QDBusConnection::systemBus()
+    ).call(
+        "GetAll", "org.freedesktop.NetworkManager.Device.Wireless"
+    );
+
+    if (wlanPropReply.isValid()) {
+        QVariantMap wlanProps = wlanPropReply.value();
+        QList<QDBusObjectPath> aps = qdbus_cast<QList<QDBusObjectPath>>(wlanProps["AccessPoints"]);
+        foreach (QDBusObjectPath path, aps) onAccessPointAdded(path);
+        m_activeAccessPoint = wlanProps["ActiveAccessPoint"].value<QDBusObjectPath>();
+        emit activeAccessPointChanged(m_accessPoints.value(m_activeAccessPoint));
+    }
+}
+
+void WifiSettings::onDeviceRemoved(QDBusObjectPath path) {
+    if (m_wlanPath.path() == path.path()) m_wlanPath.setPath("");
 }
 
 void WifiSettings::onAccessPointAdded(QDBusObjectPath path) {
