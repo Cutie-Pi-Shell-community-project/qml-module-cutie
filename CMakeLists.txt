@@ -15,6 +15,7 @@ qt_standard_project_setup()
 
 set(plugin_SOURCES
     src/plugin.cpp src/plugin.h
+    src/iconprovider.cpp src/iconprovider.h
     src/volume/cutievolume.cpp src/volume/cutievolume.h
     src/wifi/cutienetworkconnection.cpp src/wifi/cutienetworkconnection.h
     src/wifi/wifiaccesspoint.cpp src/wifi/wifiaccesspoint.h

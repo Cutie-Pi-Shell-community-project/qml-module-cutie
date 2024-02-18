@@ -23,3 +23,9 @@ void CutiePlugin::registerTypes(const char *uri)
 		uri, 1, 0, "CutieOfonoCall",
 		"Cannot be crated directly, use dial() on the modem object to call");
 }
+
+void CutiePlugin::initializeEngine(QQmlEngine *engine, const char *uri)
+{
+	Q_UNUSED(uri);
+	engine->addImageProvider("icon", &iconProvider);
+}
