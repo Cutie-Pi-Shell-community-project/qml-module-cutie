@@ -7,11 +7,15 @@ import Cutie
 ListView {
     id: root
 	property CutieMenu menu
+    property string floatIconName
+    property url floatIconSource
+    signal floatAction()
     footerPositioning: ListView.OverlayFooter
     footer: Item {
-        height: !!menu ? 100 : 0
+        height: visible ? 100 : 0
         width: root.width
-        visible: !!menu
+        visible: !!menu || floatIconName
+            || floatIconSource.toString()
         z: 100
         CutieButton {
             width: 50
@@ -19,10 +23,13 @@ ListView {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.margins: 25
-            text: "\u2261"
-            font.pixelSize: 30
+            icon.name: menu ? "open-menu-symbolic" : floatIconName
+            icon.source: floatIconSource
+            icon.color: Atmosphere.textColor
+            property bool usingTheme: false
 
             onClicked: {
+                root.floatAction();
                 if (menu) {
                     menu.y = root.height - menu.height - 100
                     menu.open();
