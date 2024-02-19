@@ -27,5 +27,7 @@ void CutiePlugin::registerTypes(const char *uri)
 void CutiePlugin::initializeEngine(QQmlEngine *engine, const char *uri)
 {
 	Q_UNUSED(uri);
+	QIcon::setThemeName(
+		qEnvironmentVariable("CUTIE_ICON_THEME", "Adwaita"));
 	engine->addImageProvider("icon", &iconProvider);
 }
