@@ -57,8 +57,8 @@ Button {
                     }
 
                     if (status == Image.Ready) {
-                        height = contentLabel.height;
-                        width = contentLabel.height;
+                        height = root.height - 10;
+                        width = height * root.icon.width / root.icon.height;
                     }
                 }
             }
@@ -67,8 +67,8 @@ Button {
                 source: contentIcon
                 color: root.icon.color
                 visible: root.icon.color
-                width: contentIcon.width
-                height: contentIcon.height
+                width: Math.min(contentIcon.width, root.icon.height)
+                height: Math.min(contentIcon.height, root.icon.width)
                 anchors.verticalCenter: parent.verticalCenter
             }
 
