@@ -13,6 +13,17 @@ Button {
     font.family: "Lato"
     height: contentLabel.height + 10
     padding: 5
+
+    onIconChanged: {
+        if (icon.name) {
+            contentIcon.usingTheme = true;
+            contentIcon.source = "image://icon/" + icon.name;
+        } else if (icon.source) {
+            contentIcon.usingTheme = false;
+            contentIcon.source = icon.source;
+        }
+    }
+
     background: Rectangle {
         id: backgroundRect
         anchors.fill: parent
@@ -25,6 +36,7 @@ Button {
             opacity: root.pressed || root.checked ? .75 : 0
         }
     }
+
     contentItem: Column {
         anchors.centerIn: parent
 
@@ -40,15 +52,6 @@ Button {
                 visible: !root.icon.color
                 property bool usingTheme: false
                 anchors.verticalCenter: parent.verticalCenter
-
-                Component.onCompleted: {
-                    if (root.icon.name) {
-                        usingTheme = true;
-                        source = "image://icon/" + root.icon.name;
-                    } else if (root.icon.source) {
-                        source = root.icon.source;
-                    }
-                }
 
                 onStatusChanged: {
                     if (status == Image.Error && usingTheme) {
