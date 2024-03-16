@@ -20,5 +20,11 @@ Package: qml6-module-cutie
 Architecture: any
 Multi-Arch: foreign
 Pre-Depends: ${misc:Pre-Depends}
-Depends: ${misc:Depends}, ${shlibs:Depends}, qml6-module-qtquick, qml6-module-qtquick-controls, qml6-module-qtsensors, qml6-module-qt5compat-graphicaleffects, fonts-lato
+Depends: ${misc:Depends}, ${shlibs:Depends}, 
+         qml6-module-qtquick,
+         qml6-module-qtquick-controls,
+         qml6-module-qtsensors,
+         qml6-module-qt5compat-graphicaleffects,
+         fonts-lato,
+         cutie-icon-theme,
 Description: This package contains a QML (Qt6) module for Cutie specific functionality.
