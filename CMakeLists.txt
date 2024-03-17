@@ -10,6 +10,7 @@ pkg_check_modules(CUTIESTORE cutiestore REQUIRED IMPORTED_TARGET)
 pkg_check_modules(ATMOSPHERE atmosphere REQUIRED IMPORTED_TARGET)
 pkg_check_modules(CUTIEMODEM cutiemodem REQUIRED IMPORTED_TARGET)
 pkg_check_modules(NOTIFICATION cutienotification REQUIRED IMPORTED_TARGET)
+pkg_check_modules(FEEDBACK cutiefeedback REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
@@ -46,6 +47,7 @@ target_link_libraries(qmlcutieplugin PUBLIC
     PkgConfig::ATMOSPHERE
     PkgConfig::CUTIEMODEM
     PkgConfig::NOTIFICATION
+    PkgConfig::FEEDBACK
 )
 
 install(TARGETS qmlcutieplugin

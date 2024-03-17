@@ -8,6 +8,7 @@
 #include <cutiestore.h>
 #include <cutiemodem.h>
 #include <cutienotification.h>
+#include <cutiefeedback.h>
 
 #include "iconprovider.h"
 #include "wifi/wifisettings.h"
