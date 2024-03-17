@@ -24,6 +24,10 @@ Button {
         }
     }
 
+    onClicked: {
+        CutieFeedback.trigger(Application.name, "button-pressed", {}, -1);
+    }
+
     background: Rectangle {
         id: backgroundRect
         anchors.fill: parent

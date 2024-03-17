@@ -10,6 +10,10 @@ MenuItem {
 	padding: 15
 	bottomPadding: 10
 
+    onTriggered: {
+        CutieFeedback.trigger(Application.name, "button-pressed", {}, -1);
+    }
+
 	background: CutieTile {
 		anchors.fill: parent
 		anchors.topMargin: 5

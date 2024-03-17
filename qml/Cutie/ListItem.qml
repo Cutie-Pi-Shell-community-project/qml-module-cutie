@@ -17,8 +17,15 @@ Button {
 	icon.height: 20
 
 	onPressAndHold: {
-		if (menu) menu.open();
+		if (menu) {
+        	CutieFeedback.trigger(Application.name, "button-pressed", {}, -1);
+			menu.open();
+		}
 	}
+
+    onClicked: {
+        CutieFeedback.trigger(Application.name, "button-pressed", {}, -1);
+    }
 
 	background: CutieTile {
 		anchors.fill: parent
