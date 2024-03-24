@@ -9,12 +9,10 @@
 #include <cutiemodem.h>
 #include <cutienotification.h>
 #include <cutiefeedback.h>
+#include <cutienetworking.h>
 
 #include "iconprovider.h"
-#include "wifi/wifisettings.h"
-#include "wifi/wifisettings.h"
 #include "volume/cutievolume.h"
-#include "mobilenetwork/mobilenetwork.h"
 
 class CutiePlugin : public QQmlExtensionPlugin {
 	Q_OBJECT

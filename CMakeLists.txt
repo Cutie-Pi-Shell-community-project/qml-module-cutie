@@ -11,17 +11,14 @@ pkg_check_modules(ATMOSPHERE atmosphere REQUIRED IMPORTED_TARGET)
 pkg_check_modules(CUTIEMODEM cutiemodem REQUIRED IMPORTED_TARGET)
 pkg_check_modules(NOTIFICATION cutienotification REQUIRED IMPORTED_TARGET)
 pkg_check_modules(FEEDBACK cutiefeedback REQUIRED IMPORTED_TARGET)
+pkg_check_modules(NETWORKING cutienetworking REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
 set(plugin_SOURCES
     src/plugin.cpp src/plugin.h
     src/iconprovider.cpp src/iconprovider.h
-    src/volume/cutievolume.cpp src/volume/cutievolume.h
-    src/wifi/cutienetworkconnection.cpp src/wifi/cutienetworkconnection.h
-    src/wifi/wifiaccesspoint.cpp src/wifi/wifiaccesspoint.h
-    src/wifi/wifisettings.cpp src/wifi/wifisettings.h
-    src/mobilenetwork/mobilenetwork.cpp src/mobilenetwork/mobilenetwork.h)
+    src/volume/cutievolume.cpp src/volume/cutievolume.h)
 
 qt6_add_qml_module(qmlcutieplugin
     URI Cutie
@@ -48,6 +45,7 @@ target_link_libraries(qmlcutieplugin PUBLIC
     PkgConfig::CUTIEMODEM
     PkgConfig::NOTIFICATION
     PkgConfig::FEEDBACK
+    PkgConfig::NETWORKING
 )
 
 install(TARGETS qmlcutieplugin
