@@ -28,7 +28,7 @@ import Cutie 1.0
 - [CutieModemSettings](types/modemsettings)
 - [CutieNetworkConnection](types/networkconnection)
 - [CutieNotifications](types/notifications)
-- [CutieOfonoModem](types/ofonomodem)
+- [CutieModem](types/cutiemodem)
 - [CutiePage](#)
 - [CutiePageHeader](#)
 - [CutiePageStack](#)

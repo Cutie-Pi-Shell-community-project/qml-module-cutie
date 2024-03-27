@@ -1,10 +1,8 @@
 ---
-title: CutieOfonoModem QML Type
+title: CutieModem QML Type
 ---
 
-CutieOfonoModem provides an interface to interact with a modem exported on the Ofono D-Bus service.
-
-Inherits: CutieModem
+CutieModem provides an interface to interact with a modem exported on the Ofono D-Bus service.
 
 ### Properties
 
@@ -18,7 +16,7 @@ Inherits: CutieModem
 
 ## Detailed Description
 
-The list of modems returned by [CutieModemSettings](modemsettings) contains objects inheriting an abstract type CutieModem. For modems managed by Ofono, the type CutieOfonoModem will be used to provide access to the modem. Currently, only Ofono is supported.
+The list of modems returned by [CutieModemSettings](modemsettings) contains objects inheriting an abstract type CutieModem.
 
 ## Property Documentation
 

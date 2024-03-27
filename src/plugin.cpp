@@ -20,9 +20,9 @@ void CutiePlugin::registerTypes(const char *uri)
 	qmlRegisterType<WifiAccessPoint>(uri, 1, 0, "CutieWifiAccessPoint");
 	qmlRegisterType<CutieNetworkConnection>(uri, 1, 0,
 						"CutieNetworkConnection");
-	qmlRegisterType<OfonoModem>(uri, 1, 0, "CutieOfonoModem");
-	qmlRegisterUncreatableType<OfonoCall>(
-		uri, 1, 0, "CutieOfonoCall",
+	qmlRegisterType<CutieModem>(uri, 1, 0, "CutieModem");
+	qmlRegisterUncreatableType<CutieCall>(
+		uri, 1, 0, "CutieCall",
 		"Cannot be crated directly, use dial() on the modem object to call");
 }
 

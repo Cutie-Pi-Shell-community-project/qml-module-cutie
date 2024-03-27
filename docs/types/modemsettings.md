@@ -20,4 +20,4 @@ CutieModemSettings is a singleton type providing settings and system integration
 
 list&lt;CutieModem&gt;, readonly
 
-Holds a list of the available modems. See [CutieOfonoModem](ofonomodem) for information about interacting with the listed modems.
+Holds a list of the available modems. See [CutieModem](cutiemodem) for information about interacting with the listed modems.
