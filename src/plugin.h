@@ -10,6 +10,7 @@
 #include <cutienotification.h>
 #include <cutiefeedback.h>
 #include <cutienetworking.h>
+#include <cutiephonenumber.h>
 
 #include "iconprovider.h"
 #include "volume/cutievolume.h"

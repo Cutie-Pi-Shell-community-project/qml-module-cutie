@@ -12,6 +12,7 @@ pkg_check_modules(CUTIEMODEM cutiemodem REQUIRED IMPORTED_TARGET)
 pkg_check_modules(NOTIFICATION cutienotification REQUIRED IMPORTED_TARGET)
 pkg_check_modules(FEEDBACK cutiefeedback REQUIRED IMPORTED_TARGET)
 pkg_check_modules(NETWORKING cutienetworking REQUIRED IMPORTED_TARGET)
+pkg_check_modules(PHONENUMBER cutiephonenumber REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
@@ -46,6 +47,7 @@ target_link_libraries(qmlcutieplugin PUBLIC
     PkgConfig::NOTIFICATION
     PkgConfig::FEEDBACK
     PkgConfig::NETWORKING
+    PkgConfig::PHONENUMBER
 )
 
 install(TARGETS qmlcutieplugin

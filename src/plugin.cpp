@@ -16,12 +16,17 @@ void CutiePlugin::registerTypes(const char *uri)
 					      &CutieVolume::provider);
 	qmlRegisterSingletonType<AtmosphereModel>(uri, 1, 0, "Atmosphere",
 						  &AtmosphereModel::provider);
+	qmlRegisterSingletonType<CutiePhonenumberHelper>(uri, 1, 0, "CutiePhonenumberHelper",
+					     &CutiePhonenumberHelper::provider);
+
 	qmlRegisterType<CutieStore>(uri, 1, 0, "CutieStore");
 	qmlRegisterType<WifiAccessPoint>(uri, 1, 0, "CutieWifiAccessPoint");
 	qmlRegisterType<CutieNetworkConnection>(uri, 1, 0,
 						"CutieNetworkConnection");
 	qmlRegisterType<CutieModem::NetworkStatus>(uri, 1, 0, "NetworkStatus");
 	qmlRegisterType<CutieModem::NetworkTechnology>(uri, 1, 0, "NetworkTechnology");
+	qmlRegisterType<CutiePhonenumber>(uri, 1, 0, "CutiePhonenumber");
+
 	qmlRegisterUncreatableType<CutieModem>(uri, 1, 0, "CutieModem",
 		"Cannot be crated directly, use CutieModemSettings to get available modems");
 	qmlRegisterUncreatableType<CutieCall>(
