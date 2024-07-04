@@ -13,7 +13,6 @@
 #include <cutiephonenumber.h>
 
 #include "iconprovider.h"
-#include "volume/cutievolume.h"
 
 class CutiePlugin : public QQmlExtensionPlugin {
 	Q_OBJECT

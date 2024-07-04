@@ -12,8 +12,6 @@ void CutiePlugin::registerTypes(const char *uri)
 						&Notifications::provider);
 	qmlRegisterSingletonType<Feedback>(uri, 1, 0, "CutieFeedback",
 					      &Feedback::provider);
-	qmlRegisterSingletonType<CutieVolume>(uri, 1, 0, "CutieVolume",
-					      &CutieVolume::provider);
 	qmlRegisterSingletonType<AtmosphereModel>(uri, 1, 0, "Atmosphere",
 						  &AtmosphereModel::provider);
 	qmlRegisterSingletonType<CutiePhonenumberHelper>(uri, 1, 0, "CutiePhonenumberHelper",
