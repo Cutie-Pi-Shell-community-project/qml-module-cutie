@@ -13,7 +13,6 @@ Build-Depends: pkg-kde-tools,
                libcutiemodem-dev,
                libcutienotification-dev,
                libcutiefeedback-dev,
-               libcutienetworking-dev,
                libcutiephonenumber-dev,
 Standards-Version: 4.5.1
 

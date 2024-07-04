@@ -2,10 +2,6 @@
 
 void CutiePlugin::registerTypes(const char *uri)
 {
-	qmlRegisterSingletonType<WifiSettings>(uri, 1, 0, "CutieWifiSettings",
-					       &WifiSettings::provider);
-	qmlRegisterSingletonType<MobileNetwork>(uri, 1, 0, "CutieMobileNetwork",
-						&MobileNetwork::provider);
 	qmlRegisterSingletonType<ModemSettings>(uri, 1, 0, "CutieModemSettings",
 						&ModemSettings::provider);
 	qmlRegisterSingletonType<Notifications>(uri, 1, 0, "CutieNotifications",
@@ -18,9 +14,6 @@ void CutiePlugin::registerTypes(const char *uri)
 					     &CutiePhonenumberHelper::provider);
 
 	qmlRegisterType<CutieStore>(uri, 1, 0, "CutieStore");
-	qmlRegisterType<WifiAccessPoint>(uri, 1, 0, "CutieWifiAccessPoint");
-	qmlRegisterType<CutieNetworkConnection>(uri, 1, 0,
-						"CutieNetworkConnection");
 	qmlRegisterType<CutieModem::NetworkStatus>(uri, 1, 0, "NetworkStatus");
 	qmlRegisterType<CutieModem::NetworkTechnology>(uri, 1, 0, "NetworkTechnology");
 	qmlRegisterType<CutiePhonenumber>(uri, 1, 0, "CutiePhonenumber");
