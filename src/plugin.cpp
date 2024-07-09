@@ -4,8 +4,6 @@ void CutiePlugin::registerTypes(const char *uri)
 {
 	qmlRegisterSingletonType<ModemSettings>(uri, 1, 0, "CutieModemSettings",
 						&ModemSettings::provider);
-	qmlRegisterSingletonType<Notifications>(uri, 1, 0, "CutieNotifications",
-						&Notifications::provider);
 	qmlRegisterSingletonType<Feedback>(uri, 1, 0, "CutieFeedback",
 					      &Feedback::provider);
 	qmlRegisterSingletonType<AtmosphereModel>(uri, 1, 0, "Atmosphere",

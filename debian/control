@@ -11,7 +11,6 @@ Build-Depends: pkg-kde-tools,
                libatmosphere-dev,
                libcutiestore-dev,
                libcutiemodem-dev,
-               libcutienotification-dev,
                libcutiefeedback-dev,
 Standards-Version: 4.5.1
 
