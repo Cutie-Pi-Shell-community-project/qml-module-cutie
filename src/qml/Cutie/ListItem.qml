@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 import Cutie
+import Cutie.Feedback
 
 Button {
 	id: root
