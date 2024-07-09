@@ -9,7 +9,6 @@
 #include <cutiemodem.h>
 #include <cutienotification.h>
 #include <cutiefeedback.h>
-#include <cutiephonenumber.h>
 
 #include "iconprovider.h"
 
