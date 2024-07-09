@@ -6,7 +6,6 @@
 
 #include <atmosphere.h>
 #include <cutiestore.h>
-#include <cutiemodem.h>
 #include <cutiefeedback.h>
 
 #include "iconprovider.h"

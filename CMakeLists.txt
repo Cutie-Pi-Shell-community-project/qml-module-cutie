@@ -7,7 +7,6 @@ find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Qml Quick)
 pkg_check_modules(CUTIESTORE cutiestore REQUIRED IMPORTED_TARGET)
 pkg_check_modules(ATMOSPHERE atmosphere REQUIRED IMPORTED_TARGET)
-pkg_check_modules(CUTIEMODEM cutiemodem REQUIRED IMPORTED_TARGET)
 pkg_check_modules(FEEDBACK cutiefeedback REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
@@ -36,7 +35,6 @@ target_link_libraries(qmlcutieplugin PUBLIC
     Qt::Quick
     PkgConfig::CUTIESTORE
     PkgConfig::ATMOSPHERE
-    PkgConfig::CUTIEMODEM
     PkgConfig::FEEDBACK
 )
 
