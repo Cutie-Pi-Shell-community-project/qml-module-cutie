@@ -9,7 +9,6 @@ Build-Depends: pkg-kde-tools,
                pkg-config,
                qt6-declarative-dev,
                libatmosphere-dev,
-               libcutiefeedback-dev,
 Standards-Version: 4.5.1
 
 Package: qml6-module-cutie

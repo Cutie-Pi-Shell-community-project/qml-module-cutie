@@ -6,7 +6,6 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Qml Quick)
 pkg_check_modules(ATMOSPHERE atmosphere REQUIRED IMPORTED_TARGET)
-pkg_check_modules(FEEDBACK cutiefeedback REQUIRED IMPORTED_TARGET)
 
 qt_standard_project_setup()
 
@@ -33,7 +32,6 @@ target_link_libraries(qmlcutieplugin PUBLIC
     Qt::Qml
     Qt::Quick
     PkgConfig::ATMOSPHERE
-    PkgConfig::FEEDBACK
 )
 
 install(TARGETS qmlcutieplugin
