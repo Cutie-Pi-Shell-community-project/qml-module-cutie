@@ -5,7 +5,6 @@
 #include <QtQml/QQmlExtensionPlugin>
 
 #include <atmosphere.h>
-#include <cutiestore.h>
 #include <cutiefeedback.h>
 
 #include "iconprovider.h"

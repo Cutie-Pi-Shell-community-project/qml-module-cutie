@@ -6,8 +6,6 @@ void CutiePlugin::registerTypes(const char *uri)
 					      &Feedback::provider);
 	qmlRegisterSingletonType<AtmosphereModel>(uri, 1, 0, "Atmosphere",
 						  &AtmosphereModel::provider);
-
-	qmlRegisterType<CutieStore>(uri, 1, 0, "CutieStore");
 }
 
 void CutiePlugin::initializeEngine(QQmlEngine *engine, const char *uri)
